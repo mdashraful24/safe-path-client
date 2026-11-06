@@ -67,7 +67,7 @@ export default function LoginForm({
         <h1 className="text-3xl font-bold tracking-tight text-slate-900">
           Welcome back
         </h1>
-        <p className="text-sm text-slate-500">
+        <p className="text-md md:text-lg">
           Enter your credentials to access your account
         </p>
       </div>
@@ -91,7 +91,7 @@ export default function LoginForm({
                 <div className="relative group">
                   <label
                     htmlFor={field.name}
-                    className="absolute left-4 top-2 text-sm font-medium text-slate-500 transition-all"
+                    className="absolute left-4 top-2 text-sm font-medium text-slate-600 transition-all"
                   >
                     Email address
                   </label>
@@ -133,7 +133,7 @@ export default function LoginForm({
                   <div className="flex items-center justify-between absolute left-4 right-4 top-2">
                     <label
                       htmlFor={field.name}
-                      className="text-sm font-medium text-slate-500"
+                      className="text-sm font-medium text-slate-600"
                     >
                       Password
                     </label>
@@ -154,7 +154,7 @@ export default function LoginForm({
                     type="button"
                     onClick={() => setShowPassword((v) => !v)}
                     disabled={isLoginProcessing}
-                    className="absolute right-3 bottom-3 text-slate-400 hover:text-slate-600 transition-colors"
+                    className="absolute right-3 bottom-3 text-slate-600 hover:text-slate-600 transition-colors"
                     tabIndex={-1}
                   >
                     {showPassword ? <EyeOff size={18} /> : <Eye size={18} />}
@@ -200,11 +200,11 @@ export default function LoginForm({
 
       {/* Divider */}
       <div className="flex items-center gap-3">
-        <div className="h-px flex-1 bg-slate-100" />
-        <span className="text-xs font-medium text-slate-400 uppercase tracking-widest">
+        <div className="h-px flex-1 bg-slate-300" />
+        <span className="text-xs font-medium text-slate-500 uppercase tracking-widest">
           or continue with
         </span>
-        <div className="h-px flex-1 bg-slate-100" />
+        <div className="h-px flex-1 bg-slate-300" />
       </div>
 
       {/* Google login */}
@@ -221,7 +221,7 @@ export default function LoginForm({
       />
 
       {/* Footer link */}
-      <p className="text-center text-sm text-slate-500">
+      <p className="text-center text-md text-slate-600">
         Don&apos;t have an account?{" "}
         <Link
           href="/register"

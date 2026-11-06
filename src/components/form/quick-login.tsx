@@ -68,8 +68,8 @@ export default function QuickLogin({
   };
 
   return (
-    <div className="flex flex-col gap-3 border-t pt-4">
-      <p className="text-center text-xs font-medium tracking-wide text-muted-foreground uppercase">
+    <div className="flex flex-col gap-3 border-t pt-6">
+      <p className="text-center text-xs font-medium tracking-wide text-foreground uppercase">
         Quick login (demo)
       </p>
       <div className="grid grid-cols-3 gap-2">
@@ -84,6 +84,7 @@ export default function QuickLogin({
               size="lg"
               disabled={disabled || isPending}
               onClick={() => handleQuickLogin(account)}
+              className="font-medium"
             >
               {isCurrent ? (
                 <>

@@ -169,11 +169,11 @@ export default function ForgotPasswordForm() {
           <span className="h-2 w-2 rounded-full bg-slate-200" />
         </div>
 
-        <div className="flex flex-col gap-1">
+        <div className="flex flex-col gap-1.5">
           <h1 className="text-3xl font-bold tracking-tight text-slate-900">
             Forgot password?
           </h1>
-          <p className="text-sm text-slate-500">
+          <p className="text-md md:text-lg">
             Enter your email and we&apos;ll send you a verification code.
           </p>
         </div>
@@ -190,7 +190,7 @@ export default function ForgotPasswordForm() {
             <div className="relative group">
               <label
                 htmlFor="email"
-                className="absolute left-4 top-2 text-sm font-medium text-slate-500"
+                className="absolute left-4 top-2 text-sm font-medium text-slate-600"
               >
                 Email address
               </label>
@@ -231,7 +231,7 @@ export default function ForgotPasswordForm() {
           </Button>
         </form>
 
-        <p className="text-center text-sm text-slate-500">
+        <p className="text-center text-md text-slate-500">
           <Link
             href="/login"
             className="font-semibold text-emerald-600 hover:text-emerald-700 transition-colors"

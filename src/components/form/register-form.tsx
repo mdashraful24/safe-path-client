@@ -71,7 +71,7 @@ export default function RegisterForm() {
         <h1 className="text-3xl font-bold tracking-tight text-slate-900">
           Create an account
         </h1>
-        <p className="text-sm text-slate-500">
+        <p className="text-md md:text-lg">
           Join SafePath to report and follow safety incidents.
         </p>
       </div>
@@ -95,7 +95,7 @@ export default function RegisterForm() {
                 <div className="relative group">
                   <label
                     htmlFor={field.name}
-                    className="absolute left-4 top-2 text-sm font-medium text-slate-500 transition-all"
+                    className="absolute left-4 top-2 text-sm font-medium text-slate-600 transition-all"
                   >
                     Full name
                   </label>
@@ -136,7 +136,7 @@ export default function RegisterForm() {
                 <div className="relative group">
                   <label
                     htmlFor={field.name}
-                    className="absolute left-4 top-2 text-sm font-medium text-slate-500 transition-all"
+                    className="absolute left-4 top-2 text-sm font-medium text-slate-600 transition-all"
                   >
                     Email address
                   </label>
@@ -177,7 +177,7 @@ export default function RegisterForm() {
                 <div className="relative group">
                   <label
                     htmlFor={field.name}
-                    className="absolute left-4 top-2 text-sm font-medium text-slate-500 transition-all"
+                    className="absolute left-4 top-2 text-sm font-medium text-slate-600 transition-all"
                   >
                     Password
                   </label>
@@ -196,7 +196,7 @@ export default function RegisterForm() {
                   <button
                     type="button"
                     onClick={() => setShowPassword((v) => !v)}
-                    className="absolute right-3 bottom-3 text-slate-400 hover:text-slate-600 transition-colors"
+                    className="absolute right-3 bottom-3 text-slate-600 hover:text-slate-600 transition-colors"
                     tabIndex={-1}
                   >
                     {showPassword ? <EyeOff size={18} /> : <Eye size={18} />}
@@ -226,7 +226,7 @@ export default function RegisterForm() {
                 <div className="relative group">
                   <label
                     htmlFor={field.name}
-                    className="absolute left-4 top-2 text-sm font-medium text-slate-500 transition-all"
+                    className="absolute left-4 top-2 text-sm font-medium text-slate-600 transition-all"
                   >
                     Confirm password
                   </label>
@@ -245,7 +245,7 @@ export default function RegisterForm() {
                   <button
                     type="button"
                     onClick={() => setShowConfirmPassword((v) => !v)}
-                    className="absolute right-3 bottom-3 text-slate-400 hover:text-slate-600 transition-colors"
+                    className="absolute right-3 bottom-3 text-slate-600 hover:text-slate-600 transition-colors"
                     tabIndex={-1}
                   >
                     {showConfirmPassword ? (
@@ -298,7 +298,7 @@ export default function RegisterForm() {
       {/* <GoogleLoginComponent /> */}
 
       {/* Footer link */}
-      <p className="text-center text-sm text-slate-500">
+      <p className="text-center text-md text-slate-600">
         Already have an account?{" "}
         <Link
           href="/login"
