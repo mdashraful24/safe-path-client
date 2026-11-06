@@ -14,33 +14,18 @@ import NativeSelect from "@/components/ui/native-select";
 import { Spinner } from "@/components/ui/spinner";
 import { Textarea } from "@/components/ui/textarea";
 import { toast } from "@/components/ui/toast";
-import { useCreateAdminChangeRequest, useGetMe } from "@/hooks";
+import { useCreateAdminChangeRequest } from "@/hooks";
 import { getErrorMessage } from "@/lib/utils";
 import type { AdminChangeRequestPayload } from "@/types";
 import { adminChangeRequestSchema } from "@/validation";
 
 export default function ChangeRequestBodyPage() {
-  const { data } = useGetMe();
   const [type, setType] = useState<AdminChangeRequestPayload["type"]>("EMAIL");
   const [reason, setReason] = useState("");
   const [requestedEmail, setRequestedEmail] = useState("");
   const [newPassword, setNewPassword] = useState("");
 
   const createRequest = useCreateAdminChangeRequest();
-
-  if (data?.data?.role !== "ADMIN") {
-    return (
-      <Card>
-        <CardHeader>
-          <CardTitle>Change requests</CardTitle>
-          <CardDescription>
-            Only admins submit change requests. Super admins review them from
-            the Super Admin page.
-          </CardDescription>
-        </CardHeader>
-      </Card>
-    );
-  }
 
   const handleSubmit = () => {
     const payload: AdminChangeRequestPayload =

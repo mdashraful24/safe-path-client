@@ -2,19 +2,22 @@
 
 import { useQueryClient } from "@tanstack/react-query";
 import { REGEXP_ONLY_DIGITS } from "input-otp";
+import {
+  AlertTriangle,
+  Camera,
+  CheckCircle2,
+  KeyRound,
+  Mail,
+  Shield,
+  Trash2,
+  User,
+} from "lucide-react";
 import Image from "next/image";
 import Link from "next/link";
 import { useRouter } from "next/navigation";
 import { useState } from "react";
 import type { UpdateProfilePayload } from "@/api";
 import { Button } from "@/components/ui/button";
-import {
-  Card,
-  CardContent,
-  CardDescription,
-  CardHeader,
-  CardTitle,
-} from "@/components/ui/card";
 import {
   Dialog,
   DialogContent,
@@ -272,273 +275,358 @@ export default function ProfilePage() {
   };
 
   return (
-    <div className="flex flex-col gap-6">
+    <div className="flex flex-col gap-8 max-w-4xl">
+      {/* Title Header */}
       <div>
-        <h1 className="text-2xl font-bold tracking-tight">Profile</h1>
-        <p className="text-sm text-muted-foreground">
-          Manage your account details and security.
+        <h1 className="text-2xl sm:text-3xl font-extrabold tracking-tight text-slate-900 dark:text-white">
+          Account Settings
+        </h1>
+        <p className="mt-1 text-sm text-slate-500 dark:text-slate-400">
+          Manage your personal information, security credentials, and preferences.
         </p>
       </div>
 
       {deletionPending && (
-        <div className="rounded-lg border border-amber-500/40 bg-amber-500/10 p-3 text-sm">
-          Your account is pending deletion review. Some actions are restricted.
+        <div className="flex items-center gap-3 rounded-2xl border border-amber-300 bg-amber-50 p-4 text-sm text-amber-800 dark:border-amber-800 dark:bg-amber-950/40 dark:text-amber-300">
+          <AlertTriangle className="size-5 shrink-0 text-amber-600" />
+          <span>Your account is pending deletion review. Some actions are currently restricted.</span>
         </div>
       )}
 
-      <Card>
-        <CardHeader>
-          <CardTitle>Account details</CardTitle>
-          <CardDescription>
-            {user.email} · {user.role.replace("_", " ")}
-          </CardDescription>
-        </CardHeader>
-        <CardContent className="flex flex-col gap-4">
-          <div className="flex items-center gap-4">
-            {user.imageUrl ? (
-              <Image
-                src={user.imageUrl}
-                alt={user.name}
-                width={64}
-                height={64}
-                className="size-16 rounded-full object-cover"
-              />
-            ) : (
-              <div className="flex size-16 items-center justify-center rounded-full bg-muted text-xl font-semibold">
-                {user.name.charAt(0).toUpperCase()}
-              </div>
-            )}
-            <div className="flex flex-col gap-2">
-              <div>
-                <p className="font-medium">{user.name}</p>
-                <p className="text-sm text-muted-foreground">{user.email}</p>
-              </div>
+      {/* SECTION 1: Personal Profile */}
+      <div className="rounded-3xl border border-slate-200/80 bg-white p-6 sm:p-8 dark:border-slate-800 dark:bg-slate-900 shadow-xs">
+        <div className="flex items-center gap-3 border-b border-slate-100 dark:border-slate-800/80 pb-6 mb-6">
+          <div className="flex size-10 items-center justify-center rounded-xl bg-emerald-500/10 text-emerald-600 dark:bg-emerald-500/20 dark:text-emerald-400">
+            <User className="size-5" />
+          </div>
+          <div>
+            <h2 className="text-base sm:text-lg font-bold text-slate-900 dark:text-white">
+              Personal Information
+            </h2>
+            <p className="text-xs text-slate-500">
+              Update your photo and display name
+            </p>
+          </div>
+        </div>
+
+        <div className="flex flex-col gap-6">
+          {/* Avatar Row */}
+          <div className="flex items-center gap-5">
+            <div className="relative">
+              {user.imageUrl ? (
+                <Image
+                  src={user.imageUrl}
+                  alt={user.name}
+                  width={80}
+                  height={80}
+                  className="size-20 rounded-2xl object-cover ring-2 ring-emerald-500/30"
+                />
+              ) : (
+                <div className="flex size-20 items-center justify-center rounded-2xl bg-gradient-to-br from-slate-800 to-slate-950 text-white text-2xl font-bold ring-2 ring-slate-200 dark:ring-slate-800">
+                  {user.name.charAt(0).toUpperCase()}
+                </div>
+              )}
+            </div>
+
+            <div className="flex flex-col gap-1.5">
+              <span className="text-base font-bold text-slate-900 dark:text-white">
+                {user.name}
+              </span>
+              <span className="text-xs text-slate-500">
+                {user.email} · {user.role.replace("_", " ")}
+              </span>
+
               {user.imageUrl && (
-                <Button
+                <button
                   type="button"
-                  variant="outline"
-                  size="sm"
                   disabled={removeImage.isPending}
                   onClick={handleRemoveImage}
+                  className="mt-1 text-xs font-semibold text-rose-600 hover:text-rose-700 dark:text-rose-400 transition-colors self-start"
                 >
                   {removeImage.isPending ? "Removing..." : "Remove picture"}
-                </Button>
+                </button>
               )}
             </div>
           </div>
 
-          <div className="grid gap-3 sm:grid-cols-2">
+          {/* Form Fields */}
+          <div className="grid gap-4 sm:grid-cols-2 pt-2">
             <div className="flex flex-col gap-1.5">
-              <label className="text-sm font-medium" htmlFor="profile-name">
-                Name
+              <label
+                className="text-xs font-bold uppercase tracking-wider text-slate-500"
+                htmlFor="profile-name"
+              >
+                Full Name
               </label>
               <Input
                 id="profile-name"
                 value={name}
                 placeholder={user.name}
                 onChange={(event) => setName(event.target.value)}
+                className="rounded-xl border-slate-200 dark:border-slate-800 py-2.5"
               />
             </div>
+
             <div className="flex flex-col gap-1.5">
-              <label className="text-sm font-medium" htmlFor="profile-image">
-                Profile picture
+              <label
+                className="text-xs font-bold uppercase tracking-wider text-slate-500"
+                htmlFor="profile-image"
+              >
+                Upload New Photo
               </label>
               <Input
                 id="profile-image"
                 type="file"
                 accept="image/*"
                 onChange={(event) => setImage(event.target.files?.[0])}
+                className="rounded-xl border-slate-200 dark:border-slate-800 py-1.5"
               />
             </div>
           </div>
 
-          <div>
+          <div className="pt-2">
             <Button
               type="button"
               disabled={updateProfile.isPending}
               onClick={handleProfileUpdate}
+              className="rounded-full bg-emerald-500 hover:bg-emerald-600 px-6 font-semibold text-white shadow-sm shadow-emerald-500/20"
             >
               {updateProfile.isPending ? (
                 <>
                   <Spinner />
-                  Saving...
+                  <span>Saving changes...</span>
                 </>
               ) : (
-                "Save profile"
+                "Save Profile"
               )}
             </Button>
           </div>
-        </CardContent>
-      </Card>
+        </div>
+      </div>
 
-      <Card>
-        <CardHeader>
-          <CardTitle>Email and password</CardTitle>
-          <CardDescription>
-            {isGoogleAccount
-              ? "This account uses Google sign-in."
-              : isAdmin
-                ? "Admins must request email or password changes from a super admin."
-                : "Changing your email requires a verification code."}
-          </CardDescription>
-        </CardHeader>
-        <CardContent>
-          {isGoogleAccount ? (
-            <p className="text-sm text-muted-foreground">
-              Google accounts cannot add email or password credentials.
+      {/* SECTION 2: Security & Credentials */}
+      <div className="rounded-3xl border border-slate-200/80 bg-white p-6 sm:p-8 dark:border-slate-800 dark:bg-slate-900 shadow-xs">
+        <div className="flex items-center gap-3 border-b border-slate-100 dark:border-slate-800/80 pb-6 mb-6">
+          <div className="flex size-10 items-center justify-center rounded-xl bg-sky-500/10 text-sky-600 dark:bg-sky-500/20 dark:text-sky-400">
+            <KeyRound className="size-5" />
+          </div>
+          <div>
+            <h2 className="text-base sm:text-lg font-bold text-slate-900 dark:text-white">
+              Security & Credentials
+            </h2>
+            <p className="text-xs text-slate-500">
+              {isGoogleAccount
+                ? "This account is authenticated through Google."
+                : isAdmin
+                  ? "Admins must request credential updates from a super admin."
+                  : "Update your email address or password."}
             </p>
-          ) : isAdmin ? (
+          </div>
+        </div>
+
+        {isGoogleAccount ? (
+          <p className="text-sm text-slate-500">
+            Google accounts do not use passwords. To update account details, manage your profile in Google Account settings.
+          </p>
+        ) : isAdmin ? (
+          <div className="flex flex-col gap-2">
+            <p className="text-sm text-slate-600 dark:text-slate-400">
+              As an Administrator, email and password modifications require Super Admin verification for security auditing.
+            </p>
             <Link
               href="/admin/change-request"
-              className="text-sm font-medium underline-offset-4 hover:underline"
+              className="inline-flex items-center gap-2 rounded-full bg-slate-900 text-white dark:bg-slate-800 px-5 py-2 text-xs font-semibold hover:bg-slate-800 transition-colors self-start mt-2"
             >
-              Open the change request form
+              <span>Submit a change request</span>
             </Link>
-          ) : (
-            <div className="flex flex-col gap-6">
-              <div className="flex flex-col gap-3">
-                <p className="text-sm font-medium">Change email</p>
-                <div className="grid gap-3 sm:grid-cols-2">
-                  <Input
-                    type="email"
-                    placeholder="New email"
-                    value={email}
-                    onChange={(event) => setEmail(event.target.value)}
-                  />
-                  <Input
-                    type="password"
-                    placeholder="Current password"
-                    value={emailPassword}
-                    onChange={(event) => setEmailPassword(event.target.value)}
-                  />
-                </div>
-                <div>
-                  <Button
-                    type="button"
-                    variant="outline"
-                    disabled={updateProfile.isPending}
-                    onClick={handleEmailChange}
-                  >
-                    Send verification code
-                  </Button>
-                </div>
+          </div>
+        ) : (
+          <div className="flex flex-col gap-8">
+            {/* Change Email */}
+            <div className="flex flex-col gap-4">
+              <span className="text-sm font-bold text-slate-900 dark:text-white">
+                Change Email Address
+              </span>
+              <div className="grid gap-3 sm:grid-cols-2">
+                <Input
+                  type="email"
+                  placeholder="New email address"
+                  value={email}
+                  onChange={(event) => setEmail(event.target.value)}
+                  className="rounded-xl"
+                />
+                <Input
+                  type="password"
+                  placeholder="Current password"
+                  value={emailPassword}
+                  onChange={(event) => setEmailPassword(event.target.value)}
+                  className="rounded-xl"
+                />
               </div>
 
-              {showEmailVerification && (
-                <div className="flex flex-col gap-3 rounded-lg border p-3">
-                  <p className="text-sm font-medium">
-                    Enter the code sent to your new email
-                  </p>
-                  <InputOTP
-                    maxLength={6}
-                    value={otp}
-                    onChange={setOtp}
-                    pattern={REGEXP_ONLY_DIGITS}
-                  >
-                    <InputOTPGroup>
-                      <InputOTPSlot index={0} />
-                      <InputOTPSlot index={1} />
-                      <InputOTPSlot index={2} />
-                      <InputOTPSlot index={3} />
-                      <InputOTPSlot index={4} />
-                      <InputOTPSlot index={5} />
-                    </InputOTPGroup>
-                  </InputOTP>
-                  <div>
-                    <Button
-                      type="button"
-                      disabled={verifyEmail.isPending || otp.length !== 6}
-                      onClick={handleVerifyEmail}
-                    >
-                      {verifyEmail.isPending ? (
-                        <>
-                          <Spinner />
-                          Verifying...
-                        </>
-                      ) : (
-                        "Verify new email"
-                      )}
-                    </Button>
-                  </div>
-                </div>
-              )}
-
-              <div className="flex flex-col gap-3 border-t pt-4">
-                <p className="text-sm font-medium">Change password</p>
-                <div className="grid gap-3 sm:grid-cols-3">
-                  <Input
-                    type="password"
-                    placeholder="Current password"
-                    value={currentPassword}
-                    onChange={(event) => setCurrentPassword(event.target.value)}
-                  />
-                  <Input
-                    type="password"
-                    placeholder="New password"
-                    value={newPassword}
-                    onChange={(event) => setNewPassword(event.target.value)}
-                  />
-                  <Input
-                    type="password"
-                    placeholder="Confirm new password"
-                    value={confirmPassword}
-                    onChange={(event) => setConfirmPassword(event.target.value)}
-                  />
-                </div>
-                <div>
-                  <Button
-                    type="button"
-                    variant="outline"
-                    disabled={updateProfile.isPending}
-                    onClick={handlePasswordChange}
-                  >
-                    Update password
-                  </Button>
-                </div>
+              <div>
+                <Button
+                  type="button"
+                  variant="outline"
+                  disabled={updateProfile.isPending}
+                  onClick={handleEmailChange}
+                  className="rounded-full"
+                >
+                  Send Verification Code
+                </Button>
               </div>
             </div>
-          )}
-        </CardContent>
-      </Card>
 
-      <Card>
-        <CardHeader>
-          <CardTitle>Delete account</CardTitle>
-          <CardDescription>
-            Request account deletion. An administrator will review it.
-          </CardDescription>
-        </CardHeader>
-        <CardContent>
+            {/* Email OTP Verification */}
+            {showEmailVerification && (
+              <div className="flex flex-col gap-4 rounded-2xl border border-emerald-200 bg-emerald-50/50 p-5 dark:border-emerald-900/50 dark:bg-emerald-950/20">
+                <div>
+                  <h4 className="text-sm font-bold text-emerald-900 dark:text-emerald-300">
+                    Verify Your New Email
+                  </h4>
+                  <p className="text-xs text-emerald-700 dark:text-emerald-400 mt-0.5">
+                    We sent a 6-digit confirmation code to your new address.
+                  </p>
+                </div>
+                <InputOTP
+                  maxLength={6}
+                  value={otp}
+                  onChange={setOtp}
+                  pattern={REGEXP_ONLY_DIGITS}
+                >
+                  <InputOTPGroup>
+                    <InputOTPSlot index={0} />
+                    <InputOTPSlot index={1} />
+                    <InputOTPSlot index={2} />
+                    <InputOTPSlot index={3} />
+                    <InputOTPSlot index={4} />
+                    <InputOTPSlot index={5} />
+                  </InputOTPGroup>
+                </InputOTP>
+                <div>
+                  <Button
+                    type="button"
+                    disabled={verifyEmail.isPending || otp.length !== 6}
+                    onClick={handleVerifyEmail}
+                    className="rounded-full bg-emerald-500 hover:bg-emerald-600 text-white font-semibold"
+                  >
+                    {verifyEmail.isPending ? (
+                      <>
+                        <Spinner />
+                        <span>Verifying...</span>
+                      </>
+                    ) : (
+                      "Confirm & Apply Email"
+                    )}
+                  </Button>
+                </div>
+              </div>
+            )}
+
+            {/* Change Password */}
+            <div className="flex flex-col gap-4 border-t border-slate-100 dark:border-slate-800/80 pt-6">
+              <span className="text-sm font-bold text-slate-900 dark:text-white">
+                Change Password
+              </span>
+              <div className="grid gap-3 sm:grid-cols-3">
+                <Input
+                  type="password"
+                  placeholder="Current password"
+                  value={currentPassword}
+                  onChange={(event) => setCurrentPassword(event.target.value)}
+                  className="rounded-xl"
+                />
+                <Input
+                  type="password"
+                  placeholder="New password"
+                  value={newPassword}
+                  onChange={(event) => setNewPassword(event.target.value)}
+                  className="rounded-xl"
+                />
+                <Input
+                  type="password"
+                  placeholder="Confirm password"
+                  value={confirmPassword}
+                  onChange={(event) => setConfirmPassword(event.target.value)}
+                  className="rounded-xl"
+                />
+              </div>
+
+              <div>
+                <Button
+                  type="button"
+                  variant="outline"
+                  disabled={updateProfile.isPending}
+                  onClick={handlePasswordChange}
+                  className="rounded-full"
+                >
+                  Update Password
+                </Button>
+              </div>
+            </div>
+          </div>
+        )}
+      </div>
+
+      {/* SECTION 3: Danger Zone */}
+      <div className="rounded-3xl border border-rose-200/80 bg-rose-50/20 p-6 sm:p-8 dark:border-rose-900/50 dark:bg-rose-950/10 shadow-xs">
+        <div className="flex items-center gap-3 border-b border-rose-100 dark:border-rose-900/40 pb-6 mb-6">
+          <div className="flex size-10 items-center justify-center rounded-xl bg-rose-500/10 text-rose-600 dark:bg-rose-500/20 dark:text-rose-400">
+            <Trash2 className="size-5" />
+          </div>
+          <div>
+            <h2 className="text-base sm:text-lg font-bold text-rose-900 dark:text-rose-300">
+              Danger Zone
+            </h2>
+            <p className="text-xs text-rose-600/80 dark:text-rose-400/80">
+              Irreversible account actions
+            </p>
+          </div>
+        </div>
+
+        <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-4">
+          <div className="flex flex-col gap-1">
+            <span className="text-sm font-bold text-slate-900 dark:text-white">
+              Request Account Deletion
+            </span>
+            <p className="text-xs text-slate-500 max-w-lg">
+              Once approved by administrators, your profile will be deactivated. You can restore your account within the grace window from the login page.
+            </p>
+          </div>
+
           <Button
             type="button"
             variant="destructive"
             disabled={deletionPending}
             onClick={() => setDeleteOpen(true)}
+            className="rounded-full font-semibold shrink-0"
           >
-            Request account deletion
+            Request Deletion
           </Button>
-        </CardContent>
-      </Card>
+        </div>
+      </div>
 
+      {/* Delete Confirmation Modal */}
       <Dialog open={deleteOpen} onOpenChange={setDeleteOpen}>
-        <DialogContent>
+        <DialogContent className="rounded-3xl">
           <DialogHeader>
-            <DialogTitle>Request account deletion?</DialogTitle>
+            <DialogTitle>Request Account Deletion?</DialogTitle>
             <DialogDescription>
-              Your account will be restricted immediately. You can restore it
-              later from the login page if the deletion has been approved.
+              Your account will be restricted immediately while administrators process your request. You may optionally provide a reason below.
             </DialogDescription>
           </DialogHeader>
           <Textarea
-            placeholder="Reason (optional)"
+            placeholder="Tell us why you are requesting account deletion (optional)"
             value={deleteReason}
             onChange={(event) => setDeleteReason(event.target.value)}
+            className="rounded-2xl min-h-[100px]"
           />
-          <DialogFooter>
+          <DialogFooter className="gap-2 sm:gap-0">
             <Button
               type="button"
               variant="outline"
               onClick={() => setDeleteOpen(false)}
+              className="rounded-full"
             >
               Cancel
             </Button>
@@ -547,14 +635,15 @@ export default function ProfilePage() {
               variant="destructive"
               disabled={requestDeletion.isPending}
               onClick={handleDeleteAccount}
+              className="rounded-full font-semibold"
             >
               {requestDeletion.isPending ? (
                 <>
                   <Spinner />
-                  Submitting...
+                  <span>Submitting...</span>
                 </>
               ) : (
-                "Submit request"
+                "Submit Deletion Request"
               )}
             </Button>
           </DialogFooter>
