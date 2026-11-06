@@ -1,6 +1,6 @@
 "use client";
 
-import { GitPullRequest, ShieldAlert, Trash2, Users } from "lucide-react";
+import { GitPullRequest, Mail, ShieldAlert, Trash2, Users } from "lucide-react";
 import Link from "next/link";
 import { usePathname } from "next/navigation";
 import { cn } from "@/lib/utils";
@@ -12,6 +12,11 @@ const links = [
     href: "/admin/deletion-requests",
     label: "Deletion Requests",
     icon: Trash2,
+  },
+  {
+    href: "/admin/contacts",
+    label: "Contact Messages",
+    icon: Mail,
   },
   {
     href: "/admin/change-request",

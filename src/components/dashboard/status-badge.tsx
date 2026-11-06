@@ -12,6 +12,11 @@ const statusConfigs: Record<string, StatusConfig> = {
       "bg-emerald-50 text-emerald-700 border-emerald-200/80 dark:bg-emerald-950/30 dark:text-emerald-400 dark:border-emerald-800/40",
     dot: "bg-emerald-500",
   },
+  RESOLVED: {
+    badge:
+      "bg-emerald-50 text-emerald-700 border-emerald-200/80 dark:bg-emerald-950/30 dark:text-emerald-400 dark:border-emerald-800/40",
+    dot: "bg-emerald-500",
+  },
   APPROVED: {
     badge:
       "bg-emerald-50 text-emerald-700 border-emerald-200/80 dark:bg-emerald-950/30 dark:text-emerald-400 dark:border-emerald-800/40",
@@ -31,6 +36,16 @@ const statusConfigs: Record<string, StatusConfig> = {
     badge:
       "bg-amber-50 text-amber-700 border-amber-200/80 dark:bg-amber-950/30 dark:text-amber-400 dark:border-amber-800/40",
     dot: "bg-amber-500",
+  },
+  IN_PROGRESS: {
+    badge:
+      "bg-amber-50 text-amber-700 border-amber-200/80 dark:bg-amber-950/30 dark:text-amber-400 dark:border-amber-800/40",
+    dot: "bg-amber-500",
+  },
+  NEW: {
+    badge:
+      "bg-sky-50 text-sky-700 border-sky-200/80 dark:bg-sky-950/30 dark:text-sky-400 dark:border-sky-800/40",
+    dot: "bg-sky-500",
   },
   PENDING_DELETION: {
     badge:

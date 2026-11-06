@@ -8,6 +8,7 @@ import {
   KeyRound,
   LayoutDashboard,
   LogOut,
+  Mail,
   PlusCircle,
   ShieldAlert,
   Trash2,
@@ -75,6 +76,11 @@ export default function DashboardSidebar({
       href: "/admin/deletion-requests",
       label: "Deletion requests",
       icon: Trash2,
+    },
+    {
+      href: "/admin/contacts",
+      label: "Contact messages",
+      icon: Mail,
     },
   ];
 

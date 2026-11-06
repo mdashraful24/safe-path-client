@@ -8,7 +8,8 @@ const footerSections = [
       { label: "Live Incidents", href: "/incidents" },
       { label: "Report an Incident", href: "/dashboard/incidents/new" },
       { label: "My Reports", href: "/dashboard/incidents" },
-      { label: "Dashboard", href: "/dashboard" },
+      { label: "Contact Us", href: "/contact" },
+      // { label: "Dashboard", href: "/dashboard" },
     ],
   },
   {

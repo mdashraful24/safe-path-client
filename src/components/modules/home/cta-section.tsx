@@ -15,7 +15,7 @@ export default function CtaSection() {
         <div className="mt-8 flex flex-wrap justify-center gap-4">
           <Link
             href="/register"
-            className="inline-flex items-center gap-2 rounded-full bg-emerald-500 hover:bg-emerald-600 px-8 py-3.5 text-md font-semibold text-white shadow-lg shadow-emerald-500/25 transition-all hover:shadow-xl hover:-translate-y-0.5"
+            className="inline-flex items-center gap-2 rounded-full bg-emerald-600 hover:bg-emerald-500 px-8 py-3.5 text-md font-semibold text-white shadow-lg shadow-emerald-500/25 transition-all hover:shadow-xl hover:-translate-y-0.5"
           >
             <span>Create an account</span>
             <ArrowRight className="size-4" />

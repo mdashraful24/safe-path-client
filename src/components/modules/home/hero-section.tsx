@@ -47,7 +47,7 @@ export default function HeroSection() {
           <div className="mt-10 flex flex-wrap items-center justify-center gap-4">
             <Link
               href="/register"
-              className="inline-flex items-center gap-2.5 rounded-full bg-emerald-500 hover:bg-emerald-600 px-7 py-3.5 text-sm font-semibold text-white shadow-lg shadow-emerald-500/25 transition-all hover:shadow-xl hover:shadow-emerald-500/40 hover:-translate-y-0.5"
+              className="inline-flex items-center gap-2.5 rounded-full bg-emerald-600 hover:bg-emerald-500 px-7 py-3.5 text-sm font-semibold text-white shadow-lg shadow-emerald-500/25 transition-all hover:shadow-xl hover:shadow-emerald-500/40 hover:-translate-y-0.5"
             >
               <PlusCircle className="size-4" />
               <span>Get started free</span>

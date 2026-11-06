@@ -1,7 +1,13 @@
 "use client";
 
 import { useQueryClient } from "@tanstack/react-query";
-import { Compass, LayoutDashboard, LogOut, ShieldAlert } from "lucide-react";
+import {
+  Compass,
+  LayoutDashboard,
+  LogOut,
+  Mail,
+  ShieldAlert,
+} from "lucide-react";
 import Link from "next/link";
 import { usePathname, useRouter } from "next/navigation";
 import Logo from "@/components/brand/logo";
@@ -43,7 +49,10 @@ export default function Header() {
 
   const navLinks = [
     { href: "/incidents", label: "Incident Feed", icon: Compass },
+    { href: "/contact", label: "Contact", icon: Mail },
   ];
+
+  const isLoginActive = pathname === "/login";
 
   return (
     <header className="sticky top-0 z-50 w-full border-b border-slate-200/70 bg-white/85 backdrop-blur-md dark:border-slate-800/70 dark:bg-slate-950/85 transition-all">
@@ -120,13 +129,18 @@ export default function Header() {
             <div className="flex items-center gap-2">
               <Link
                 href="/login"
-                className="rounded-full px-4 py-2 text-sm font-medium text-slate-600 transition-colors hover:text-slate-900 dark:text-slate-400 dark:hover:text-white"
+                className={cn(
+                  "flex items-center gap-2 rounded-full px-4 py-2 text-md font-medium transition-all duration-200",
+                  isLoginActive
+                    ? "bg-emerald-50 text-emerald-700 dark:bg-emerald-950/40 dark:text-emerald-400 font-semibold"
+                    : "hover:bg-slate-100 hover:text-slate-900 dark:text-slate-400 dark:hover:bg-slate-900 dark:hover:text-slate-200",
+                )}
               >
                 Sign in
               </Link>
               <Link
                 href="/register"
-                className="inline-flex items-center gap-2 rounded-full bg-emerald-500 hover:bg-emerald-600 px-5 py-2 text-sm font-semibold text-white shadow-sm shadow-emerald-500/20 transition-all duration-200 hover:shadow-md hover:shadow-emerald-500/30"
+                className="inline-flex items-center gap-2 rounded-full bg-emerald-600 hover:bg-emerald-500 px-5 py-2 text-sm font-semibold text-white shadow-sm shadow-emerald-500/20 transition-all duration-200 hover:shadow-md hover:shadow-emerald-500/30"
               >
                 <ShieldAlert className="size-4" />
                 <span>Join SafePath</span>
