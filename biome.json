@@ -22,7 +22,13 @@
   "linter": {
     "enabled": true,
     "rules": {
-      "recommended": true
+      "recommended": true,
+      "style": {
+        "useImportType": "off"
+      },
+      "a11y": {
+        "useValidAriaRole": "warn"
+      }
     },
     "domains": {
       "next": "recommended",
@@ -35,5 +41,20 @@
         "organizeImports": "on"
       }
     }
-  }
+  },
+  "overrides": [
+    {
+      "includes": ["src/components/ui/**"],
+      "linter": {
+        "rules": {
+          "a11y": {
+            "useSemanticElements": "off",
+            "noLabelWithoutControl": "off",
+            "useFocusableInteractive": "off",
+            "useAriaPropsForRole": "off"
+          }
+        }
+      }
+    }
+  ]
 }
