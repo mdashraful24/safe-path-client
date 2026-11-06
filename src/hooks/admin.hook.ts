@@ -59,6 +59,7 @@ export function useUpdateUserStatus() {
     onSuccess: () => {
       queryClient.invalidateQueries({ queryKey: ["ADMIN_USERS"] });
       queryClient.invalidateQueries({ queryKey: ["ADMIN_USER"] });
+      queryClient.invalidateQueries({ queryKey: ["USER"] });
       queryClient.invalidateQueries({ queryKey: ["DASHBOARD_OVERVIEW"] });
     },
   });
@@ -178,6 +179,8 @@ export function useUpdateAdminIncident() {
     onSuccess: () => {
       queryClient.invalidateQueries({ queryKey: ["ADMIN_INCIDENTS"] });
       queryClient.invalidateQueries({ queryKey: ["ADMIN_INCIDENT"] });
+      queryClient.invalidateQueries({ queryKey: ["PUBLIC_INCIDENTS"] });
+      queryClient.invalidateQueries({ queryKey: ["PUBLIC_INCIDENT"] });
       queryClient.invalidateQueries({ queryKey: ["DASHBOARD_OVERVIEW"] });
     },
   });
@@ -188,8 +191,15 @@ export function useDeleteAdminIncident() {
 
   return useMutation({
     mutationFn: deleteAdminIncident,
-    onSuccess: () => {
+    onSuccess: (_, incidentId) => {
       queryClient.invalidateQueries({ queryKey: ["ADMIN_INCIDENTS"] });
+      queryClient.removeQueries({
+        queryKey: ["ADMIN_INCIDENT", incidentId],
+      });
+      queryClient.invalidateQueries({ queryKey: ["PUBLIC_INCIDENTS"] });
+      queryClient.removeQueries({
+        queryKey: ["PUBLIC_INCIDENT", incidentId],
+      });
       queryClient.invalidateQueries({ queryKey: ["DASHBOARD_OVERVIEW"] });
     },
   });
@@ -209,6 +219,8 @@ export function useReviewIncident() {
     onSuccess: () => {
       queryClient.invalidateQueries({ queryKey: ["ADMIN_INCIDENTS"] });
       queryClient.invalidateQueries({ queryKey: ["ADMIN_INCIDENT"] });
+      queryClient.invalidateQueries({ queryKey: ["PUBLIC_INCIDENTS"] });
+      queryClient.invalidateQueries({ queryKey: ["PUBLIC_INCIDENT"] });
       queryClient.invalidateQueries({ queryKey: ["DASHBOARD_OVERVIEW"] });
     },
   });

@@ -93,9 +93,15 @@ export function useDeleteMyIncident() {
 
   return useMutation({
     mutationFn: deleteMyIncident,
-    onSuccess: () => {
+    onSuccess: (_, incidentId) => {
       queryClient.invalidateQueries({ queryKey: ["MY_INCIDENTS"] });
+      queryClient.removeQueries({
+        queryKey: ["MY_INCIDENT", incidentId],
+      });
       queryClient.invalidateQueries({ queryKey: ["PUBLIC_INCIDENTS"] });
+      queryClient.removeQueries({
+        queryKey: ["PUBLIC_INCIDENT", incidentId],
+      });
       queryClient.invalidateQueries({ queryKey: ["DASHBOARD_OVERVIEW"] });
     },
   });

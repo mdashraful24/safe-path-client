@@ -34,6 +34,7 @@ export function useUpdateUserRole() {
     onSuccess: () => {
       queryClient.invalidateQueries({ queryKey: ["ADMINS"] });
       queryClient.invalidateQueries({ queryKey: ["ADMIN_USERS"] });
+      queryClient.invalidateQueries({ queryKey: ["USER"] });
       queryClient.invalidateQueries({ queryKey: ["DASHBOARD_OVERVIEW"] });
     },
   });
