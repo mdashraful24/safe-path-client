@@ -9,7 +9,13 @@ import { toast } from "@/components/ui/toast";
 import { useGoogleOAuth } from "@/hooks";
 import { getErrorMessage } from "@/lib/utils";
 
-export default function GoogleLoginComponent() {
+export default function GoogleLoginComponent({
+  disabled = false,
+  onPendingChange,
+}: {
+  disabled?: boolean;
+  onPendingChange?: (pending: boolean) => void;
+}) {
   const router = useRouter();
   const queryClient = useQueryClient();
   const [isPending, setIsPending] = useState(false);
@@ -38,6 +44,7 @@ export default function GoogleLoginComponent() {
 
     if (!idToken) {
       setIsPending(false);
+      onPendingChange?.(false);
       toast.add({
         title: "Google Login Failed",
         description:
@@ -48,6 +55,7 @@ export default function GoogleLoginComponent() {
     }
 
     setIsPending(true);
+    onPendingChange?.(true);
     googleLogin(
       { idToken },
       {
@@ -67,7 +75,10 @@ export default function GoogleLoginComponent() {
             type: "error",
           });
         },
-        onSettled: () => setIsPending(false),
+        onSettled: () => {
+          setIsPending(false);
+          onPendingChange?.(false);
+        },
       },
     );
   };
@@ -79,14 +90,15 @@ export default function GoogleLoginComponent() {
       description: "Something went wrong. Please try again.",
       type: "error",
     });
+    onPendingChange?.(false);
   };
 
   return (
     <div ref={containerRef} className="relative flex w-full justify-center">
       <div
         style={{
-          opacity: isPending ? 0 : 1,
-          pointerEvents: isPending ? "none" : "auto",
+          opacity: isPending ? 0 : disabled ? 0.5 : 1,
+          pointerEvents: isPending || disabled ? "none" : "auto",
         }}
         className="flex w-full justify-center mx-auto"
       >

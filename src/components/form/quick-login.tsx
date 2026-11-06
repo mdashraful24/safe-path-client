@@ -15,7 +15,15 @@ export interface DemoAccount {
   password: string;
 }
 
-export default function QuickLogin({ accounts }: { accounts: DemoAccount[] }) {
+export default function QuickLogin({
+  accounts,
+  disabled = false,
+  onPendingChange,
+}: {
+  accounts: DemoAccount[];
+  disabled?: boolean;
+  onPendingChange?: (pending: boolean) => void;
+}) {
   const router = useRouter();
   const queryClient = useQueryClient();
   const [pendingEmail, setPendingEmail] = useState<string | null>(null);
@@ -27,6 +35,7 @@ export default function QuickLogin({ accounts }: { accounts: DemoAccount[] }) {
 
   const handleQuickLogin = (account: DemoAccount) => {
     setPendingEmail(account.email);
+    onPendingChange?.(true);
 
     login(
       {
@@ -52,6 +61,7 @@ export default function QuickLogin({ accounts }: { accounts: DemoAccount[] }) {
         },
         onSettled: () => {
           setPendingEmail(null);
+          onPendingChange?.(false);
         },
       },
     );
@@ -72,7 +82,7 @@ export default function QuickLogin({ accounts }: { accounts: DemoAccount[] }) {
               type="button"
               variant="outline"
               size="lg"
-              disabled={isPending}
+              disabled={disabled || isPending}
               onClick={() => handleQuickLogin(account)}
             >
               {isCurrent ? (

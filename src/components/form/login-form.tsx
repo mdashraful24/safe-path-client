@@ -21,6 +21,7 @@ export default function LoginForm({
   demoAccounts?: DemoAccount[];
 }) {
   const [showPassword, setShowPassword] = useState(false);
+  const [isLoginProcessing, setIsLoginProcessing] = useState(false);
   const router = useRouter();
   const queryClient = useQueryClient();
   const { mutate: login, isPending: loginPending } = useLogin();
@@ -34,6 +35,7 @@ export default function LoginForm({
       onSubmit: loginSchema,
     },
     onSubmit: async ({ value }) => {
+      setIsLoginProcessing(true);
       login(value, {
         onSuccess: () => {
           toast.add({
@@ -41,6 +43,8 @@ export default function LoginForm({
             description: "Welcome back to SafePath.",
             type: "success",
           });
+          form.reset();
+          setShowPassword(false);
           queryClient.invalidateQueries({ queryKey: ["USER"] });
           router.push("/dashboard");
         },
@@ -51,6 +55,7 @@ export default function LoginForm({
             type: "error",
           });
         },
+        onSettled: () => setIsLoginProcessing(false),
       });
     },
   });
@@ -148,6 +153,7 @@ export default function LoginForm({
                   <button
                     type="button"
                     onClick={() => setShowPassword((v) => !v)}
+                    disabled={isLoginProcessing}
                     className="absolute right-3 bottom-3 text-slate-400 hover:text-slate-600 transition-colors"
                     tabIndex={-1}
                   >
@@ -178,7 +184,7 @@ export default function LoginForm({
         {/* Submit button */}
         <Button
           type="submit"
-          disabled={loginPending}
+          disabled={loginPending || isLoginProcessing}
           className="w-full h-12 bg-emerald-500 hover:bg-emerald-600 text-white font-semibold rounded-full text-md tracking-wide transition-all duration-200 shadow-lg shadow-emerald-500/25 mt-1"
         >
           {loginPending ? (
@@ -202,10 +208,17 @@ export default function LoginForm({
       </div>
 
       {/* Google login */}
-      <GoogleLoginComponent />
+      <GoogleLoginComponent
+        disabled={isLoginProcessing}
+        onPendingChange={setIsLoginProcessing}
+      />
 
       {/* Quick login */}
-      <QuickLogin accounts={demoAccounts} />
+      <QuickLogin
+        accounts={demoAccounts}
+        disabled={isLoginProcessing}
+        onPendingChange={setIsLoginProcessing}
+      />
 
       {/* Footer link */}
       <p className="text-center text-sm text-slate-500">
