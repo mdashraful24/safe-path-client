@@ -1,4 +1,5 @@
 import { type ReactNode, Suspense } from "react";
+import Footer from "@/components/layout/public/footer";
 import Header from "@/components/layout/public/header";
 
 export default function IncidentsLayout({ children }: { children: ReactNode }) {
@@ -14,6 +15,7 @@ export default function IncidentsLayout({ children }: { children: ReactNode }) {
       <main className="mx-auto w-full max-w-7xl flex-1 px-4 sm:px-6 lg:px-8 py-8 sm:py-10">
         {children}
       </main>
+      <Footer />
     </div>
   );
 }

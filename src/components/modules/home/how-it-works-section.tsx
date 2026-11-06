@@ -33,15 +33,15 @@ export default function HowItWorksSection() {
           {steps.map((item) => (
             <div
               key={item.step}
-              className="flex flex-col rounded-3xl border border-slate-200/60 p-8 bg-slate-50/50 dark:border-slate-800 dark:bg-slate-900/20"
+              className="flex flex-col rounded-3xl border border-slate-200/60 p-8 bg-slate-50/50 dark:border-slate-800 dark:bg-slate-900/20 shadow-sm hover:shadow-xl hover:shadow-slate-200/50 dark:hover:shadow-none hover:-translate-y-1 transition-all duration-300"
             >
-              <span className="text-4xl font-black text-emerald-500/30 mb-4">
+              <span className="text-4xl font-black text-emerald-600/50 mb-4">
                 {item.step}
               </span>
-              <h4 className="text-lg font-bold text-slate-900 dark:text-white mb-2">
+              <h4 className="text-2xl font-bold dark:text-white mb-2">
                 {item.title}
               </h4>
-              <p className="text-sm text-slate-500 dark:text-slate-400 leading-relaxed">
+              <p className="text-md dark:text-slate-400 leading-relaxed">
                 {item.desc}
               </p>
             </div>

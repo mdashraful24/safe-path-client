@@ -137,7 +137,7 @@ export default function MyIncidentsPage() {
       )}
 
       {/* Pagination */}
-      <div className="flex flex-wrap items-center justify-between gap-4 border-t border-slate-200/80 dark:border-slate-800 pt-6 text-xs font-medium text-slate-500">
+      <div className="flex flex-wrap items-center justify-between gap-4 border-t border-slate-200/80 dark:border-slate-800 pt-6 text-xs font-medium">
         <span>
           {meta
             ? `Showing page ${meta.page} of ${meta.totalPages} (${meta.total} reports)`

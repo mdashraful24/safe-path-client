@@ -31,7 +31,7 @@ export default function HeroSection() {
           {/* Headline */}
           <h1 className="text-4xl sm:text-6xl font-extrabold tracking-tight text-balance leading-tight sm:leading-none">
             Safety awareness starts with a{" "}
-            <span className="text-transparent bg-clip-text bg-gradient-to-r from-emerald-400 via-teal-300 to-emerald-200">
+            <span className="text-transparent bg-clip-text bg-linear-to-r from-emerald-400 via-teal-300 to-emerald-200">
               single report.
             </span>
           </h1>

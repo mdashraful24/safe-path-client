@@ -49,7 +49,7 @@ export default function IncidentsPage() {
   const meta = data?.meta;
 
   return (
-    <div className="flex flex-col gap-8 pb-12">
+    <div className="flex flex-col gap-8 pb-4">
       {/* Page Title & Hero Header */}
       <div className="flex flex-col sm:flex-row sm:items-end justify-between gap-4 border-b border-slate-200/80 dark:border-slate-800 pb-6">
         <div>
@@ -142,7 +142,7 @@ export default function IncidentsPage() {
             No incidents found
           </h3>
           <p className="mt-1 text-sm text-slate-500 max-w-sm">
-            We couldn&apos;t find any verified incident matching your search filters. Try adjusting your search query or area.
+            We couldn't find any verified incident matching your search filters. Try adjusting your search query or area.
           </p>
         </div>
       ) : (
@@ -158,7 +158,7 @@ export default function IncidentsPage() {
       )}
 
       {/* Pagination Footer */}
-      <div className="flex flex-wrap items-center justify-between gap-4 border-t border-slate-200/80 dark:border-slate-800 pt-6 text-xs font-medium text-slate-500">
+      <div className="flex flex-wrap items-center justify-between gap-4 border-t border-slate-200/80 dark:border-slate-800 pt-6 text-xs font-medium">
         <span>
           {meta
             ? `Showing page ${meta.page} of ${meta.totalPages} (${meta.total} verified reports)`

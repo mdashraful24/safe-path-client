@@ -18,6 +18,7 @@ export default function Logo({ className }: { className?: string }) {
         fill="none"
         xmlns="http://www.w3.org/2000/svg"
         className="shrink-0"
+        aria-hidden="true"
       >
         {/* Pin body / teardrop */}
         <path
@@ -30,7 +31,7 @@ export default function Logo({ className }: { className?: string }) {
         <circle cx="16" cy="11" r="1.8" fill="#10b981" />
       </svg>
 
-      <span className="text-xl font-bold text-slate-900">
+      <span className="text-xl md:text-2xl font-bold text-slate-900 dark:text-white">
         Safe<span className="text-emerald-500">Path</span>
       </span>
     </Link>
