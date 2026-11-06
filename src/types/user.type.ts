@@ -23,6 +23,15 @@ export interface User {
   emailVerifiedAt?: string | null;
   isDeleted: boolean;
   deletedAt?: string | null;
+  deletionRequestedAt?: string | null;
+  deletionRequestReason?: string | null;
+  deletionRejectionReason?: string | null;
+  deletionRejectedAt?: string | null;
+  deletionApprovedAt?: string | null;
+  restoreDeadline?: string | null;
+  purgeAfter?: string | null;
+  restoredAt?: string | null;
+  purgedAt?: string | null;
   lastLoginAt?: string | null;
   createdAt: string;
   updatedAt: string;

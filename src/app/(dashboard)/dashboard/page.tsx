@@ -1,7 +1,8 @@
 "use client";
 
-import { BadgeCheck, Calendar, Mail, Shield, UserIcon } from "lucide-react";
 import Link from "next/link";
+import type { ReactNode } from "react";
+import StatusBadge from "@/components/dashboard/status-badge";
 import { buttonVariants } from "@/components/ui/button";
 import {
   Card,
@@ -10,95 +11,303 @@ import {
   CardHeader,
   CardTitle,
 } from "@/components/ui/card";
-import { useGetMe } from "@/hooks";
+import { Spinner } from "@/components/ui/spinner";
+import { useDashboardOverview, useGetMe } from "@/hooks";
+import { formatDate, formatDateTime } from "@/lib/format";
+import type {
+  AdminChangeRequestSummary,
+  DashboardIncidentCard,
+  DeletionRequestItem,
+} from "@/types";
 
-function formatDate(value?: string | null) {
-  if (!value) return "—";
-  return new Date(value).toISOString().slice(0, 10);
+function Stat({ label, value }: { label: string; value: number }) {
+  return (
+    <div className="rounded-xl border p-4">
+      <p className="text-sm text-muted-foreground">{label}</p>
+      <p className="text-2xl font-bold">{value}</p>
+    </div>
+  );
+}
+
+function Section({
+  title,
+  description,
+  action,
+  children,
+}: {
+  title: string;
+  description?: string;
+  action?: ReactNode;
+  children: ReactNode;
+}) {
+  return (
+    <Card>
+      <CardHeader>
+        <div className="flex items-start justify-between gap-3">
+          <div>
+            <CardTitle>{title}</CardTitle>
+            {description && <CardDescription>{description}</CardDescription>}
+          </div>
+          {action}
+        </div>
+      </CardHeader>
+      <CardContent>{children}</CardContent>
+    </Card>
+  );
+}
+
+function RecentIncidents({
+  incidents,
+}: {
+  incidents: DashboardIncidentCard[];
+}) {
+  if (incidents.length === 0) {
+    return <p className="text-sm text-muted-foreground">No incidents yet.</p>;
+  }
+
+  return (
+    <div className="flex flex-col divide-y">
+      {incidents.map((incident) => (
+        <div
+          key={incident.id}
+          className="flex items-start justify-between gap-3 py-2 first:pt-0 last:pb-0"
+        >
+          <div>
+            <p className="font-medium">{incident.title}</p>
+            <p className="text-xs text-muted-foreground">
+              {incident.area} · {formatDate(incident.incidentDate)}
+              {incident.reporter ? ` · ${incident.reporter.name}` : ""}
+            </p>
+          </div>
+          <StatusBadge value={incident.status} />
+        </div>
+      ))}
+    </div>
+  );
+}
+
+function RecentDeletionRequests({
+  requests,
+}: {
+  requests: DeletionRequestItem[];
+}) {
+  if (requests.length === 0) {
+    return (
+      <p className="text-sm text-muted-foreground">No pending requests.</p>
+    );
+  }
+
+  return (
+    <div className="flex flex-col divide-y">
+      {requests.map((request) => (
+        <div key={request.id} className="py-2 first:pt-0 last:pb-0">
+          <p className="font-medium">{request.name}</p>
+          <p className="text-xs text-muted-foreground">
+            {request.email} · requested{" "}
+            {formatDateTime(request.deletionRequestedAt)}
+          </p>
+        </div>
+      ))}
+    </div>
+  );
+}
+
+function RecentChangeRequests({
+  requests,
+}: {
+  requests: AdminChangeRequestSummary[];
+}) {
+  if (requests.length === 0) {
+    return (
+      <p className="text-sm text-muted-foreground">No pending requests.</p>
+    );
+  }
+
+  return (
+    <div className="flex flex-col divide-y">
+      {requests.map((request) => (
+        <div
+          key={request.id}
+          className="flex items-start justify-between gap-3 py-2 first:pt-0 last:pb-0"
+        >
+          <div>
+            <p className="font-medium">{request.requester.name}</p>
+            <p className="text-xs text-muted-foreground">{request.reason}</p>
+          </div>
+          <StatusBadge value={request.type} />
+        </div>
+      ))}
+    </div>
+  );
 }
 
 export default function DashboardPage() {
-  const { data } = useGetMe();
-  const user = data?.data;
+  const { data: me } = useGetMe();
+  const { data, isPending, isError } = useDashboardOverview();
 
-  if (!user) return null;
+  const user = me?.data;
+  const overview = data?.data;
 
-  const isAdmin = user.role === "ADMIN" || user.role === "SUPER_ADMIN";
+  if (isPending) {
+    return (
+      <div className="flex justify-center py-16">
+        <Spinner />
+      </div>
+    );
+  }
+
+  if (isError || !overview) {
+    return (
+      <p className="text-sm text-muted-foreground">
+        Could not load the dashboard overview.
+      </p>
+    );
+  }
 
   return (
     <div className="flex flex-col gap-6">
-      <div className="flex flex-wrap items-start justify-between gap-3">
+      <div className="flex flex-wrap items-end justify-between gap-3">
         <div>
           <h1 className="text-2xl font-bold tracking-tight">
-            Welcome, {user.name}
+            Welcome{user ? `, ${user.name}` : ""}
           </h1>
           <p className="text-sm text-muted-foreground">
-            Here is an overview of your SafePath account.
+            Overview for your {overview.role.toLowerCase().replace("_", " ")}{" "}
+            account.
           </p>
         </div>
-        {isAdmin && (
-          <Link
-            href="/admin"
-            className={buttonVariants({ variant: "outline", size: "sm" })}
+        <Link
+          href="/dashboard/profile"
+          className={buttonVariants({ variant: "outline", size: "sm" })}
+        >
+          Manage profile
+        </Link>
+      </div>
+
+      {overview.role === "USER" && (
+        <>
+          <div className="grid gap-3 sm:grid-cols-2 lg:grid-cols-4">
+            <Stat label="Total reports" value={overview.incidents.total} />
+            <Stat label="Pending" value={overview.incidents.pending} />
+            <Stat label="Approved" value={overview.incidents.approved} />
+            <Stat label="Rejected" value={overview.incidents.rejected} />
+          </div>
+          <Section
+            title="Recently approved reports"
+            description="Your latest approved safety reports."
           >
-            Admin panel
-          </Link>
-        )}
-      </div>
+            <RecentIncidents incidents={overview.recentIncidents} />
+          </Section>
+        </>
+      )}
 
-      <div className="grid gap-4 sm:grid-cols-2">
-        <Card>
-          <CardHeader>
-            <CardTitle>Account</CardTitle>
-            <CardDescription>Your profile information</CardDescription>
-          </CardHeader>
-          <CardContent className="flex flex-col gap-3">
-            <div className="flex items-center gap-2">
-              <UserIcon className="size-4 text-muted-foreground" />
-              <span>{user.name}</span>
-            </div>
-            <div className="flex items-center gap-2">
-              <Mail className="size-4 text-muted-foreground" />
-              <span>{user.email}</span>
-            </div>
-            <div className="flex items-center gap-2">
-              <Calendar className="size-4 text-muted-foreground" />
-              <span>Joined {formatDate(user.createdAt)}</span>
-            </div>
-          </CardContent>
-        </Card>
+      {overview.role === "ADMIN" && (
+        <>
+          <div className="grid gap-3 sm:grid-cols-3 lg:grid-cols-6">
+            <Stat label="Users" value={overview.users.total} />
+            <Stat label="Active" value={overview.users.active} />
+            <Stat label="Blocked" value={overview.users.blocked} />
+            <Stat
+              label="Pending deletion"
+              value={overview.users.pendingDeletion}
+            />
+            <Stat label="Deleted" value={overview.users.deleted} />
+            <Stat label="Incidents" value={overview.incidents.total} />
+          </div>
+          <div className="grid gap-4 lg:grid-cols-2">
+            <Section
+              title="Pending incidents"
+              description="Incidents waiting for review."
+              action={
+                <Link
+                  href="/admin/incidents"
+                  className={buttonVariants({ variant: "outline", size: "sm" })}
+                >
+                  Review
+                </Link>
+              }
+            >
+              <RecentIncidents incidents={overview.recentPendingIncidents} />
+            </Section>
+            <Section
+              title="Deletion requests"
+              description="Accounts awaiting a decision."
+              action={
+                <Link
+                  href="/admin/deletion-requests"
+                  className={buttonVariants({ variant: "outline", size: "sm" })}
+                >
+                  Review
+                </Link>
+              }
+            >
+              <RecentDeletionRequests
+                requests={overview.recentDeletionRequests}
+              />
+            </Section>
+          </div>
+        </>
+      )}
 
-        <Card>
-          <CardHeader>
-            <CardTitle>Status</CardTitle>
-            <CardDescription>Account access and verification</CardDescription>
-          </CardHeader>
-          <CardContent className="flex flex-col gap-3">
-            <div className="flex items-center justify-between">
-              <span className="text-muted-foreground">Status</span>
-              <span className="font-medium">{user.status}</span>
-            </div>
-            <div className="flex items-center justify-between">
-              <span className="text-muted-foreground">Role</span>
-              <span className="flex items-center gap-1 font-medium">
-                <Shield className="size-4" />
-                {user.role}
-              </span>
-            </div>
-            <div className="flex items-center justify-between">
-              <span className="text-muted-foreground">Email verified</span>
-              <span className="flex items-center gap-1 font-medium">
-                <BadgeCheck className="size-4" />
-                {user.emailVerified ? "Yes" : "No"}
-              </span>
-            </div>
-            <div className="flex items-center justify-between">
-              <span className="text-muted-foreground">Sign-in method</span>
-              <span className="font-medium">{user.authProvider}</span>
-            </div>
-          </CardContent>
-        </Card>
-      </div>
+      {overview.role === "SUPER_ADMIN" && (
+        <>
+          <div className="grid gap-3 sm:grid-cols-2 lg:grid-cols-4">
+            <Stat label="Users" value={overview.users.byRole.users} />
+            <Stat label="Admins" value={overview.users.byRole.admins} />
+            <Stat
+              label="Super admins"
+              value={overview.users.byRole.superAdmins}
+            />
+            <Stat label="Incidents" value={overview.incidents.total} />
+          </div>
+          <div className="grid gap-4 lg:grid-cols-2">
+            <Section
+              title="Pending incidents"
+              description="Incidents waiting for review."
+              action={
+                <Link
+                  href="/admin/incidents"
+                  className={buttonVariants({ variant: "outline", size: "sm" })}
+                >
+                  Review
+                </Link>
+              }
+            >
+              <RecentIncidents incidents={overview.recentPendingIncidents} />
+            </Section>
+            <Section
+              title="Deletion requests"
+              description="Accounts awaiting a decision."
+              action={
+                <Link
+                  href="/admin/deletion-requests"
+                  className={buttonVariants({ variant: "outline", size: "sm" })}
+                >
+                  Review
+                </Link>
+              }
+            >
+              <RecentDeletionRequests
+                requests={overview.recentDeletionRequests}
+              />
+            </Section>
+            <Section
+              title="Admin change requests"
+              description="Email and password change requests."
+              action={
+                <Link
+                  href="/super-admin"
+                  className={buttonVariants({ variant: "outline", size: "sm" })}
+                >
+                  Review
+                </Link>
+              }
+            >
+              <RecentChangeRequests requests={overview.recentChangeRequests} />
+            </Section>
+          </div>
+        </>
+      )}
     </div>
   );
 }

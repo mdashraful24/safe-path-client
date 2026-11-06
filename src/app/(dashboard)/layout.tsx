@@ -1,4 +1,5 @@
 import AuthGuard from "@/components/auth/auth-guard";
+import DashboardNav from "@/components/layout/dashboard-nav";
 import Header from "@/components/layout/public/header";
 
 export default function DashboardLayout({
@@ -10,6 +11,7 @@ export default function DashboardLayout({
     <AuthGuard>
       <div className="flex min-h-screen flex-col">
         <Header />
+        <DashboardNav />
         <main className="mx-auto w-full max-w-6xl flex-1 px-4 py-8">
           {children}
         </main>
