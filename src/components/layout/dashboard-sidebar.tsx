@@ -19,6 +19,7 @@ import Link from "next/link";
 import { usePathname, useRouter } from "next/navigation";
 import Logo from "@/components/brand/logo";
 import { toast } from "@/components/ui/toast";
+import UserAvatar from "@/components/ui/user-avatar";
 import { useGetMe, useLogout } from "@/hooks";
 import { cn, getErrorMessage } from "@/lib/utils";
 
@@ -99,7 +100,7 @@ export default function DashboardSidebar({
   };
 
   const content = (
-    <div className="flex h-full flex-col justify-between p-4">
+    <div className="flex h-full flex-col justify-between p-3">
       <div className="flex flex-col gap-6">
         {/* Top Header & Logo */}
         <div className="flex items-center justify-between px-2 pt-2">
@@ -132,7 +133,7 @@ export default function DashboardSidebar({
         <nav className="flex flex-col gap-5 px-1 overflow-y-auto max-h-[calc(100vh-280px)]">
           {/* Main menu */}
           <div className="flex flex-col gap-1">
-            <span className="px-3 text-xs font-semibold uppercase tracking-wider text-slate-400 dark:text-slate-500">
+            <span className="px-3 text-xs font-semibold uppercase tracking-wider dark:text-slate-500">
               Menu
             </span>
             {mainLinks.map((link) => {
@@ -147,7 +148,7 @@ export default function DashboardSidebar({
                     "flex items-center gap-3 rounded-xl px-3 py-2.5 text-sm font-medium transition-all duration-200",
                     active
                       ? "bg-slate-900 text-white dark:bg-emerald-500/15 dark:text-emerald-400 font-semibold shadow-sm"
-                      : "text-slate-600 hover:bg-slate-100 hover:text-slate-900 dark:text-slate-400 dark:hover:bg-slate-800 dark:hover:text-slate-100",
+                      : "hover:bg-slate-100 hover:text-slate-900 dark:text-slate-400 dark:hover:bg-slate-800 dark:hover:text-slate-100",
                   )}
                 >
                   <Icon
@@ -155,7 +156,7 @@ export default function DashboardSidebar({
                       "size-4 shrink-0",
                       active
                         ? "text-emerald-400"
-                        : "text-slate-400 group-hover:text-slate-600",
+                        : "group-hover:text-slate-600",
                     )}
                   />
                   <span>{link.label}</span>
@@ -167,7 +168,7 @@ export default function DashboardSidebar({
           {/* Admin menu (if applicable) */}
           {(role === "ADMIN" || role === "SUPER_ADMIN") && (
             <div className="flex flex-col gap-1 border-t border-slate-100 dark:border-slate-800/80 pt-4">
-              <span className="px-3 text-xs font-semibold uppercase tracking-wider text-slate-400 dark:text-slate-500">
+              <span className="px-3 text-xs font-semibold uppercase tracking-wider dark:text-slate-500">
                 Administration
               </span>
               {adminLinks.map((link) => {
@@ -182,7 +183,7 @@ export default function DashboardSidebar({
                       "flex items-center gap-3 rounded-xl px-3 py-2.5 text-sm font-medium transition-all duration-200",
                       active
                         ? "bg-slate-900 text-white dark:bg-emerald-500/15 dark:text-emerald-400 font-semibold shadow-sm"
-                        : "text-slate-600 hover:bg-slate-100 hover:text-slate-900 dark:text-slate-400 dark:hover:bg-slate-800 dark:hover:text-slate-100",
+                        : "hover:bg-slate-100 hover:text-slate-900 dark:text-slate-400 dark:hover:bg-slate-800 dark:hover:text-slate-100",
                     )}
                   >
                     <Icon
@@ -190,7 +191,7 @@ export default function DashboardSidebar({
                         "size-4 shrink-0",
                         active
                           ? "text-emerald-400"
-                          : "text-slate-400 group-hover:text-slate-600",
+                          : "group-hover:text-slate-600",
                       )}
                     />
                     <span>{link.label}</span>
@@ -210,7 +211,7 @@ export default function DashboardSidebar({
                         "flex items-center gap-3 rounded-xl px-3 py-2.5 text-sm font-medium transition-all duration-200",
                         active
                           ? "bg-slate-900 text-white dark:bg-emerald-500/15 dark:text-emerald-400 font-semibold shadow-sm"
-                          : "text-slate-600 hover:bg-slate-100 hover:text-slate-900 dark:text-slate-400 dark:hover:bg-slate-800 dark:hover:text-slate-100",
+                          : "hover:bg-slate-100 hover:text-slate-900 dark:text-slate-400 dark:hover:bg-slate-800 dark:hover:text-slate-100",
                       )}
                     >
                       <Icon
@@ -218,7 +219,7 @@ export default function DashboardSidebar({
                           "size-4 shrink-0",
                           active
                             ? "text-emerald-400"
-                            : "text-slate-400 group-hover:text-slate-600",
+                            : "group-hover:text-slate-600",
                         )}
                       />
                       <span>{link.label}</span>
@@ -231,7 +232,7 @@ export default function DashboardSidebar({
           {/* Super admin section */}
           {role === "SUPER_ADMIN" && (
             <div className="flex flex-col gap-1 border-t border-slate-100 dark:border-slate-800/80 pt-4">
-              <span className="px-3 text-xs font-semibold uppercase tracking-wider text-slate-400 dark:text-slate-500">
+              <span className="px-3 text-xs font-semibold uppercase tracking-wider dark:text-slate-500">
                 Super Admin
               </span>
               {superAdminLinks.map((link) => {
@@ -246,7 +247,7 @@ export default function DashboardSidebar({
                       "flex items-center gap-3 rounded-xl px-3 py-2.5 text-sm font-medium transition-all duration-200",
                       active
                         ? "bg-slate-900 text-white dark:bg-emerald-500/15 dark:text-emerald-400 font-semibold shadow-sm"
-                        : "text-slate-600 hover:bg-slate-100 hover:text-slate-900 dark:text-slate-400 dark:hover:bg-slate-800 dark:hover:text-slate-100",
+                        : "hover:bg-slate-100 hover:text-slate-900 dark:text-slate-400 dark:hover:bg-slate-800 dark:hover:text-slate-100",
                     )}
                   >
                     <Icon
@@ -254,7 +255,7 @@ export default function DashboardSidebar({
                         "size-4 shrink-0",
                         active
                           ? "text-emerald-400"
-                          : "text-slate-400 group-hover:text-slate-600",
+                          : "group-hover:text-slate-600",
                       )}
                     />
                     <span>{link.label}</span>
@@ -266,15 +267,15 @@ export default function DashboardSidebar({
 
           {/* Public shortcut */}
           <div className="flex flex-col gap-1 border-t border-slate-100 dark:border-slate-800/80 pt-4">
-            <span className="px-3 text-xs font-semibold uppercase tracking-wider text-slate-400 dark:text-slate-500">
+            <span className="px-3 text-xs font-semibold uppercase tracking-wider dark:text-slate-500">
               Community
             </span>
             <Link
               href="/incidents"
               onClick={onMobileClose}
-              className="flex items-center gap-3 rounded-xl px-3 py-2 text-sm font-medium text-slate-500 hover:bg-slate-100 hover:text-slate-900 dark:text-slate-400 dark:hover:bg-slate-800"
+              className="flex items-center gap-3 rounded-xl px-3 py-2 text-sm font-medium hover:bg-slate-100 hover:text-slate-900 dark:text-slate-400 dark:hover:bg-slate-800"
             >
-              <Compass className="size-4 shrink-0 text-slate-400" />
+              <Compass className="size-4 shrink-0" />
               <span>Browse Public Feed</span>
             </Link>
           </div>
@@ -287,16 +288,18 @@ export default function DashboardSidebar({
           <Link
             href="/dashboard/profile"
             onClick={onMobileClose}
-            className="flex items-center gap-2.5 overflow-hidden flex-1 group"
+            className="flex items-center gap-2 overflow-hidden flex-1 group"
           >
-            <div className="flex size-9 shrink-0 items-center justify-center rounded-xl bg-emerald-500/15 text-xs font-bold text-emerald-700 dark:text-emerald-400 ring-1 ring-emerald-500/30">
-              {user?.name?.charAt(0).toUpperCase() ?? "U"}
-            </div>
+            <UserAvatar
+              name={user?.name ?? "User"}
+              imageUrl={user?.imageUrl}
+              className="size-9 rounded-lg bg-linear-to-br from-slate-800 to-slate-950 text-white"
+            />
             <div className="flex flex-col truncate">
-              <span className="text-xs font-semibold text-slate-900 dark:text-white truncate group-hover:text-emerald-600 dark:group-hover:text-emerald-400 transition-colors">
+              <span className="text-sm font-semibold dark:text-white truncate group-hover:text-emerald-600 dark:group-hover:text-emerald-400 transition-colors">
                 {user?.name ?? "User"}
               </span>
-              <span className="text-[11px] text-slate-500 dark:text-slate-400 truncate">
+              <span className="text-sm dark:text-slate-400 truncate">
                 {role ? role.replace("_", " ").toLowerCase() : "account"}
               </span>
             </div>
@@ -307,7 +310,7 @@ export default function DashboardSidebar({
             onClick={handleLogout}
             disabled={logoutPending}
             title="Log out"
-            className="flex size-8 shrink-0 items-center justify-center rounded-lg text-slate-400 hover:bg-rose-50 hover:text-rose-600 dark:hover:bg-rose-950/40 dark:hover:text-rose-400 transition-colors"
+            className="flex size-9 shrink-0 items-center justify-center rounded-lg hover:bg-rose-50 hover:text-rose-600 dark:hover:bg-rose-950/40 dark:hover:text-rose-400 transition-colors"
           >
             <LogOut className="size-4" />
           </button>

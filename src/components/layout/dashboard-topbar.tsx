@@ -1,8 +1,9 @@
 "use client";
 
-import { Compass, Menu, PlusCircle, ShieldCheck } from "lucide-react";
+import { Compass, Menu, PlusCircle } from "lucide-react";
 import Link from "next/link";
 import { usePathname } from "next/navigation";
+import UserAvatar from "@/components/ui/user-avatar";
 import { useGetMe } from "@/hooks";
 
 interface DashboardTopbarProps {
@@ -24,7 +25,8 @@ export default function DashboardTopbar({
     if (pathname === "/dashboard/profile") return "Profile & Security";
     if (pathname === "/admin/users") return "User Management";
     if (pathname === "/admin/incidents") return "Incident Queue";
-    if (pathname === "/admin/deletion-requests") return "Account Deletion Requests";
+    if (pathname === "/admin/deletion-requests")
+      return "Account Deletion Requests";
     if (pathname === "/admin/change-request") return "Change Requests";
     if (pathname === "/super-admin") return "Super Admin Console";
     return "Dashboard";
@@ -73,12 +75,13 @@ export default function DashboardTopbar({
         </Link>
 
         {user && (
-          <div className="flex size-8 items-center justify-center rounded-full bg-slate-900 text-white dark:bg-emerald-500 text-xs font-bold ring-2 ring-slate-100 dark:ring-slate-800 shrink-0">
-            {user.name.charAt(0).toUpperCase()}
-          </div>
+          <UserAvatar
+            name={user.name}
+            imageUrl={user.imageUrl}
+            className="size-8 rounded-full bg-slate-900 text-white dark:bg-emerald-500 text-xs ring-2 ring-slate-100 dark:ring-slate-800"
+          />
         )}
       </div>
     </header>
   );
 }
-

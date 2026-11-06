@@ -6,7 +6,7 @@ export default function Logo({ className }: { className?: string }) {
     <Link
       href="/"
       className={cn(
-        "flex items-center gap-2.5 font-semibold tracking-tight",
+        "flex items-center gap-2 font-semibold tracking-tight",
         className,
       )}
     >
@@ -30,7 +30,7 @@ export default function Logo({ className }: { className?: string }) {
         <circle cx="16" cy="11" r="1.8" fill="#10b981" />
       </svg>
 
-      <span className="text-lg font-bold text-slate-900">
+      <span className="text-xl font-bold text-slate-900">
         Safe<span className="text-emerald-500">Path</span>
       </span>
     </Link>
