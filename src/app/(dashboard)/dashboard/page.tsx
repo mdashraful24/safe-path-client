@@ -58,8 +58,10 @@ function Section({
 
 function RecentIncidents({
   incidents,
+  hrefPrefix,
 }: {
   incidents: DashboardIncidentCard[];
+  hrefPrefix?: string;
 }) {
   if (incidents.length === 0) {
     return <p className="text-sm text-muted-foreground">No incidents yet.</p>;
@@ -73,7 +75,18 @@ function RecentIncidents({
           className="flex items-start justify-between gap-3 py-2 first:pt-0 last:pb-0"
         >
           <div>
-            <p className="font-medium">{incident.title}</p>
+            <p className="font-medium">
+              {hrefPrefix ? (
+                <Link
+                  href={`${hrefPrefix}/${incident.id}`}
+                  className="hover:underline"
+                >
+                  {incident.title}
+                </Link>
+              ) : (
+                incident.title
+              )}
+            </p>
             <p className="text-xs text-muted-foreground">
               {incident.area} · {formatDate(incident.incidentDate)}
               {incident.reporter ? ` · ${incident.reporter.name}` : ""}
@@ -195,8 +208,19 @@ export default function DashboardPage() {
           <Section
             title="Recently approved reports"
             description="Your latest approved safety reports."
+            action={
+              <Link
+                href="/dashboard/incidents"
+                className={buttonVariants({ variant: "outline", size: "sm" })}
+              >
+                View all
+              </Link>
+            }
           >
-            <RecentIncidents incidents={overview.recentIncidents} />
+            <RecentIncidents
+              incidents={overview.recentIncidents}
+              hrefPrefix="/incidents"
+            />
           </Section>
         </>
       )}
@@ -227,7 +251,10 @@ export default function DashboardPage() {
                 </Link>
               }
             >
-              <RecentIncidents incidents={overview.recentPendingIncidents} />
+              <RecentIncidents
+                incidents={overview.recentPendingIncidents}
+                hrefPrefix="/admin/incidents"
+              />
             </Section>
             <Section
               title="Deletion requests"
@@ -273,7 +300,10 @@ export default function DashboardPage() {
                 </Link>
               }
             >
-              <RecentIncidents incidents={overview.recentPendingIncidents} />
+              <RecentIncidents
+                incidents={overview.recentPendingIncidents}
+                hrefPrefix="/admin/incidents"
+              />
             </Section>
             <Section
               title="Deletion requests"

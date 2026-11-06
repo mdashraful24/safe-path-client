@@ -44,6 +44,12 @@ export default function Header() {
         <Logo />
 
         <nav className="flex items-center gap-2">
+          <Link
+            href="/incidents"
+            className={buttonVariants({ variant: "ghost", size: "sm" })}
+          >
+            Incidents
+          </Link>
           {user ? (
             <>
               <Link

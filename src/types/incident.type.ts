@@ -16,7 +16,7 @@ export type IncidentSortField =
   | "createdAt"
   | "updatedAt";
 
-export interface AdminIncidentQuery {
+export interface IncidentListQuery {
   page?: number;
   limit?: number;
   area?: string;
@@ -28,13 +28,15 @@ export interface AdminIncidentQuery {
   sortOrder?: "asc" | "desc";
 }
 
+export type AdminIncidentQuery = IncidentListQuery;
+
 export interface IncidentUserRef {
   id: string;
   name: string;
   email?: string;
 }
 
-export interface AdminIncident {
+export interface Incident {
   id: string;
   title: string;
   description: string;
@@ -46,11 +48,17 @@ export interface AdminIncident {
   longitude?: number | null;
   incidentDate: string;
   imageUrl?: string | null;
-  reviewNote?: string | null;
-  reviewedById?: string | null;
   reviewedAt?: string | null;
   createdAt: string;
   updatedAt: string;
+}
+
+export interface MyIncident extends Incident {
+  reviewNote?: string | null;
+  reviewedById?: string | null;
+}
+
+export interface AdminIncident extends MyIncident {
   reporter: IncidentUserRef;
   reviewedBy?: IncidentUserRef | null;
 }
@@ -88,6 +96,17 @@ export interface IncidentCommentListQuery {
   sortOrder?: "asc" | "desc";
 }
 
+export interface CreateIncidentPayload {
+  title: string;
+  description: string;
+  category: IncidentCategory;
+  area: string;
+  location?: string;
+  latitude?: number;
+  longitude?: number;
+  incidentDate: string;
+}
+
 export interface UpdateIncidentPayload {
   title?: string;
   description?: string;
@@ -98,6 +117,8 @@ export interface UpdateIncidentPayload {
   longitude?: number;
   incidentDate?: string;
 }
+
+export type PublicIncident = Incident;
 
 export interface ReviewIncidentPayload {
   status: "APPROVED" | "REJECTED";

@@ -15,6 +15,7 @@ export default function DashboardNav() {
 
   const links = [
     { href: "/dashboard", label: "Overview" },
+    { href: "/dashboard/incidents", label: "My reports" },
     { href: "/dashboard/profile", label: "Profile" },
   ];
 

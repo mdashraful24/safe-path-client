@@ -46,10 +46,10 @@ export default function Home() {
               Get started
             </Link>
             <Link
-              href="/login"
+              href="/incidents"
               className={buttonVariants({ variant: "outline", size: "lg" })}
             >
-              Login
+              Browse incidents
             </Link>
           </div>
         </section>

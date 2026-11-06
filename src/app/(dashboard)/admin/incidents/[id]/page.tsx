@@ -3,7 +3,7 @@
 import Image from "next/image";
 import Link from "next/link";
 import { useParams, useRouter } from "next/navigation";
-import { useState } from "react";
+import { Suspense, useState } from "react";
 import StatusBadge from "@/components/dashboard/status-badge";
 import { Button, buttonVariants } from "@/components/ui/button";
 import {
@@ -56,6 +56,20 @@ const categories: IncidentCategory[] = [
 ];
 
 export default function AdminIncidentDetailPage() {
+  return (
+    <Suspense
+      fallback={
+        <div className="flex justify-center py-16">
+          <Spinner />
+        </div>
+      }
+    >
+      <AdminIncidentDetailContent />
+    </Suspense>
+  );
+}
+
+function AdminIncidentDetailContent() {
   const params = useParams();
   const incidentId = typeof params.id === "string" ? params.id : null;
   const { data, isPending, isError } = useAdminIncident(incidentId);

@@ -13,7 +13,6 @@ import {
   getUserDetails,
   listAdminIncidents,
   listDeletionRequests,
-  listIncidentComments,
   listUsers,
   rejectAccountDeletion,
   restoreDeletedAccount,
@@ -27,7 +26,6 @@ import type {
   AdminReasonPayload,
   AdminUserListQuery,
   DeletionRequestListQuery,
-  IncidentCommentListQuery,
   ReviewIncidentPayload,
   UpdateIncidentPayload,
   UpdateUserStatusPayload,
@@ -142,16 +140,6 @@ export function useAdminIncident(incidentId: string | null) {
   return useQuery({
     queryKey: ["ADMIN_INCIDENT", incidentId],
     queryFn: incidentId ? () => getAdminIncident(incidentId) : skipToken,
-  });
-}
-
-export function useIncidentComments(
-  incidentId: string,
-  query: IncidentCommentListQuery,
-) {
-  return useQuery({
-    queryKey: ["INCIDENT_COMMENTS", incidentId, query],
-    queryFn: () => listIncidentComments(incidentId, query),
   });
 }
 

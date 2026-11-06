@@ -10,8 +10,6 @@ import type {
   ApiResponse,
   DeletionRequestItem,
   DeletionRequestListQuery,
-  IncidentComment,
-  IncidentCommentListQuery,
   ReviewIncidentPayload,
   UpdateIncidentPayload,
   UpdateUserStatusPayload,
@@ -145,16 +143,6 @@ export function reviewIncident(
   return apiClient<ApiResponse<AdminIncident>>(
     `/admin/incidents/${incidentId}/review`,
     { method: "PATCH", body: payload },
-  );
-}
-
-export function listIncidentComments(
-  incidentId: string,
-  query: IncidentCommentListQuery = {},
-) {
-  return apiClient<ApiResponse<IncidentComment[]>>(
-    `/incidents/${incidentId}/comments`,
-    { query },
   );
 }
 
