@@ -7,16 +7,6 @@ import { useRouter } from "next/navigation";
 import { useEffect, useState } from "react";
 import { Button } from "@/components/ui/button";
 import {
-  Card,
-  CardContent,
-  CardDescription,
-  CardFooter,
-  CardHeader,
-  CardTitle,
-} from "@/components/ui/card";
-import { Field, FieldError, FieldLabel } from "@/components/ui/field";
-import { Input } from "@/components/ui/input";
-import {
   InputOTP,
   InputOTPGroup,
   InputOTPSlot,
@@ -154,31 +144,65 @@ export default function RestoreAccountForm() {
     });
   };
 
+  /* ── Step 1: Email ── */
   if (step === "email") {
     return (
-      <Card>
-        <CardHeader>
-          <CardTitle>Restore account</CardTitle>
-          <CardDescription>
-            Deleted accounts can be restored while the restore window is open.
-          </CardDescription>
-        </CardHeader>
+      <div className="flex flex-col gap-7">
+        {/* Step dots */}
+        <div className="flex items-center gap-2">
+          <span className="h-2 w-6 rounded-full bg-emerald-500" />
+          <span className="h-2 w-2 rounded-full bg-slate-200" />
+        </div>
 
-        <CardContent>
-          <form
-            id="restore-account-form"
-            onSubmit={(event) => {
-              event.preventDefault();
-              handleRequest();
-            }}
+        {/* Icon */}
+        <div className="flex size-14 items-center justify-center rounded-2xl bg-emerald-50 ring-1 ring-emerald-200">
+          <svg
+            xmlns="http://www.w3.org/2000/svg"
+            width="26"
+            height="26"
+            viewBox="0 0 24 24"
+            fill="none"
+            stroke="#10b981"
+            strokeWidth="2"
+            strokeLinecap="round"
+            strokeLinejoin="round"
           >
-            <Field data-invalid={Boolean(error)}>
-              <FieldLabel htmlFor="email">Email</FieldLabel>
-              <Input
+            <path d="M21 12V7H5a2 2 0 0 1 0-4h14v4" />
+            <path d="M3 5v14a2 2 0 0 0 2 2h16v-5" />
+            <path d="M18 12a2 2 0 0 0 0 4h4v-4Z" />
+          </svg>
+        </div>
+
+        <div className="flex flex-col gap-1">
+          <h1 className="text-3xl font-bold tracking-tight text-slate-900">
+            Restore account
+          </h1>
+          <p className="text-sm text-slate-500">
+            Deleted accounts can be restored while the restore window is open.
+          </p>
+        </div>
+
+        <form
+          id="restore-account-form"
+          className="flex flex-col gap-4"
+          onSubmit={(event) => {
+            event.preventDefault();
+            handleRequest();
+          }}
+        >
+          <div className="flex flex-col gap-1">
+            <div className="relative group">
+              <label
+                htmlFor="email"
+                className="absolute left-4 top-2 text-sm font-medium text-slate-500"
+              >
+                Account email
+              </label>
+              <input
                 id="email"
                 name="email"
                 type="email"
-                placeholder="Enter your account email"
+                placeholder=" "
                 value={email}
                 onChange={(event) => {
                   setEmail(event.target.value);
@@ -186,18 +210,19 @@ export default function RestoreAccountForm() {
                 }}
                 autoComplete="email"
                 aria-invalid={Boolean(error)}
+                className="w-full rounded-xl bg-slate-50 border-0 border-b-2 border-slate-200 focus:border-emerald-500 px-4 pt-7 pb-3 text-sm text-slate-900 placeholder-transparent focus:outline-none focus:bg-emerald-50/30 transition-all duration-200"
               />
-              {error && <FieldError errors={[{ message: error }]} />}
-            </Field>
-          </form>
-        </CardContent>
+            </div>
+            {error && (
+              <p className="text-red-500 text-xs mt-0.5 ml-1">{error}</p>
+            )}
+          </div>
 
-        <CardFooter className="flex flex-col gap-3">
           <Button
             type="submit"
             form="restore-account-form"
-            className="w-full"
             disabled={requestPending}
+            className="w-full h-12 bg-emerald-500 hover:bg-emerald-600 text-white font-semibold rounded-full text-md tracking-wide transition-all duration-200 shadow-lg shadow-emerald-500/25 mt-1"
           >
             {requestPending ? (
               <>
@@ -208,106 +233,131 @@ export default function RestoreAccountForm() {
               "Send restore code"
             )}
           </Button>
+        </form>
+
+        <p className="text-center text-sm text-slate-500">
           <Link
             href="/login"
-            className="text-sm text-muted-foreground underline-offset-4 hover:underline"
+            className="font-semibold text-emerald-600 hover:text-emerald-700 transition-colors"
           >
-            Back to login
+            ← Back to sign in
           </Link>
-        </CardFooter>
-      </Card>
+        </p>
+      </div>
     );
   }
 
+  /* ── Step 2: Verify ── */
   const isOtpExpired = Boolean(expiresAt) && remaining <= 0;
 
   return (
-    <Card>
-      <CardHeader>
-        <CardTitle>Verify restore</CardTitle>
-        <CardDescription>
-          Enter the code sent to {email} to restore your account.
-        </CardDescription>
-      </CardHeader>
+    <div className="flex flex-col gap-7">
+      {/* Step dots */}
+      <div className="flex items-center gap-2">
+        <span className="h-2 w-2 rounded-full bg-emerald-200" />
+        <span className="h-2 w-6 rounded-full bg-emerald-500" />
+      </div>
 
-      <CardContent>
-        <form
-          id="verify-restore-form"
-          onSubmit={(event) => {
-            event.preventDefault();
-            handleVerify();
-          }}
-        >
-          <Field data-invalid={Boolean(error)}>
-            <FieldLabel htmlFor="otp">Verification code</FieldLabel>
-            <InputOTP
-              id="otp"
-              name="otp"
-              maxLength={6}
-              value={otp}
-              onChange={(value) => {
-                setOtp(value);
-                setError("");
-              }}
-              autoComplete="one-time-code"
-              pattern={REGEXP_ONLY_DIGITS}
-            >
-              <InputOTPGroup>
-                <InputOTPSlot index={0} />
-                <InputOTPSlot index={1} />
-                <InputOTPSlot index={2} />
-                <InputOTPSlot index={3} />
-                <InputOTPSlot index={4} />
-                <InputOTPSlot index={5} />
-              </InputOTPGroup>
-            </InputOTP>
-            {isOtpExpired ? (
-              <p className="text-sm text-muted-foreground">
-                This code has expired. Please request a new one.
+      <div className="flex flex-col gap-1">
+        <h1 className="text-3xl font-bold tracking-tight text-slate-900">
+          Verify restore
+        </h1>
+        <p className="text-sm text-slate-500">
+          Enter the code sent to{" "}
+          <span className="font-medium text-slate-700">{email}</span> to restore
+          your account.
+        </p>
+      </div>
+
+      <form
+        id="verify-restore-form"
+        className="flex flex-col gap-5"
+        onSubmit={(event) => {
+          event.preventDefault();
+          handleVerify();
+        }}
+      >
+        {/* OTP slots */}
+        <div className="flex flex-col gap-2">
+          <label className="text-xs font-medium text-slate-500 ml-1">
+            Verification code
+          </label>
+          <InputOTP
+            id="otp"
+            name="otp"
+            maxLength={6}
+            value={otp}
+            onChange={(value) => {
+              setOtp(value);
+              setError("");
+            }}
+            autoComplete="one-time-code"
+            pattern={REGEXP_ONLY_DIGITS}
+          >
+            <InputOTPGroup className="gap-2">
+              <InputOTPSlot index={0} className="size-11 rounded-xl border-slate-200 bg-slate-50 text-base font-semibold focus:border-emerald-500" />
+              <InputOTPSlot index={1} className="size-11 rounded-xl border-slate-200 bg-slate-50 text-base font-semibold focus:border-emerald-500" />
+              <InputOTPSlot index={2} className="size-11 rounded-xl border-slate-200 bg-slate-50 text-base font-semibold focus:border-emerald-500" />
+              <InputOTPSlot index={3} className="size-11 rounded-xl border-slate-200 bg-slate-50 text-base font-semibold focus:border-emerald-500" />
+              <InputOTPSlot index={4} className="size-11 rounded-xl border-slate-200 bg-slate-50 text-base font-semibold focus:border-emerald-500" />
+              <InputOTPSlot index={5} className="size-11 rounded-xl border-slate-200 bg-slate-50 text-base font-semibold focus:border-emerald-500" />
+            </InputOTPGroup>
+          </InputOTP>
+
+          {isOtpExpired ? (
+            <p className="text-xs text-amber-600 ml-1">
+              This code has expired. Please request a new one.
+            </p>
+          ) : (
+            expiresAt && (
+              <p className="text-xs text-slate-500 ml-1">
+                Code expires in{" "}
+                <span className="font-semibold text-emerald-600">
+                  {formatRemainingTime()}
+                </span>
               </p>
-            ) : (
-              expiresAt && (
-                <p className="text-sm text-muted-foreground">
-                  Code expires in {formatRemainingTime()}.
-                </p>
-              )
-            )}
-            {error && <FieldError errors={[{ message: error }]} />}
-          </Field>
-        </form>
-      </CardContent>
+            )
+          )}
+          {error && (
+            <p className="text-red-500 text-xs ml-1">{error}</p>
+          )}
+        </div>
 
-      <CardFooter className="flex justify-between gap-3">
-        <Button
-          type="button"
-          variant="outline"
-          onClick={handleResend}
-          disabled={requestPending}
-        >
-          {requestPending ? (
-            <>
-              <Spinner />
-              Sending...
-            </>
-          ) : (
-            "Resend code"
-          )}
-        </Button>
-        <Button
-          type="submit"
-          form="verify-restore-form"
-          disabled={verifyPending || isOtpExpired}
-        >
-          {verifyPending ? (
-            <>
-              <Spinner />
-              Restoring...
-            </>
-          ) : (
-            "Restore account"
-          )}
-        </Button>
-      </CardFooter>
-    </Card>
+        {/* Actions */}
+        <div className="flex gap-3">
+          <button
+            type="button"
+            onClick={handleResend}
+            disabled={requestPending}
+            className="flex-1 h-12 rounded-full border-2 border-slate-200 text-sm font-semibold text-slate-600 hover:border-emerald-300 hover:text-emerald-700 transition-all duration-200 disabled:opacity-50"
+          >
+            {requestPending ? (
+              <span className="flex items-center justify-center gap-2">
+                <Spinner />
+                Sending...
+              </span>
+            ) : (
+              "Resend code"
+            )}
+          </button>
+
+          <Button
+            type="submit"
+            form="verify-restore-form"
+            disabled={verifyPending || isOtpExpired}
+            className="flex-1 h-12 bg-emerald-500 hover:bg-emerald-600 text-white font-semibold rounded-full text-sm tracking-wide transition-all duration-200 shadow-lg shadow-emerald-500/25"
+          >
+            {verifyPending ? (
+              <>
+                <Spinner />
+                Restoring...
+              </>
+            ) : (
+              "Restore account"
+            )}
+          </Button>
+        </div>
+      </form>
+    </div>
   );
 }

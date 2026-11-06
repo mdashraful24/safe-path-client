@@ -6,20 +6,6 @@ import { useRouter, useSearchParams } from "next/navigation";
 import { useEffect, useState } from "react";
 import { Button } from "@/components/ui/button";
 import {
-  Card,
-  CardContent,
-  CardDescription,
-  CardFooter,
-  CardHeader,
-  CardTitle,
-} from "@/components/ui/card";
-import {
-  Field,
-  FieldDescription,
-  FieldError,
-  FieldLabel,
-} from "@/components/ui/field";
-import {
   InputOTP,
   InputOTPGroup,
   InputOTPSlot,
@@ -139,96 +125,126 @@ export default function VerifyAccountForm() {
   }
 
   return (
-    <Card>
-      <CardHeader>
-        <CardTitle>Verify your email</CardTitle>
-        <CardDescription>
-          Enter the 6-digit code sent to {email}.
-        </CardDescription>
-      </CardHeader>
-
-      <CardContent>
-        <form
-          id="otp-form"
-          onSubmit={(event) => {
-            event.preventDefault();
-            handleVerify();
-          }}
+    <div className="flex flex-col gap-7">
+      {/* Icon badge */}
+      <div className="flex size-14 items-center justify-center rounded-2xl bg-emerald-50 ring-1 ring-emerald-200">
+        <svg
+          xmlns="http://www.w3.org/2000/svg"
+          width="26"
+          height="26"
+          viewBox="0 0 24 24"
+          fill="none"
+          stroke="#10b981"
+          strokeWidth="2"
+          strokeLinecap="round"
+          strokeLinejoin="round"
         >
-          <Field data-invalid={isInvalid}>
-            <FieldLabel htmlFor="otp">Verification code</FieldLabel>
-            <InputOTP
-              id="otp"
-              name="otp"
-              maxLength={6}
-              value={otp}
-              onChange={(value) => {
-                setOtp(value);
-                setIsInvalid(false);
-              }}
-              autoComplete="one-time-code"
-              pattern={REGEXP_ONLY_DIGITS}
-            >
-              <InputOTPGroup>
-                <InputOTPSlot index={0} />
-                <InputOTPSlot index={1} />
-                <InputOTPSlot index={2} />
-                <InputOTPSlot index={3} />
-                <InputOTPSlot index={4} />
-                <InputOTPSlot index={5} />
-              </InputOTPGroup>
-            </InputOTP>
-            {isInvalid && (
-              <FieldError
-                errors={[{ message: "Please enter the 6-digit code." }]}
-              />
-            )}
-            {isOtpExpired ? (
-              <FieldDescription>
-                This code has expired. Please request a new one.
-              </FieldDescription>
+          <rect width="20" height="16" x="2" y="4" rx="2" />
+          <path d="m22 7-8.97 5.7a1.94 1.94 0 0 1-2.06 0L2 7" />
+        </svg>
+      </div>
+
+      <div className="flex flex-col gap-1">
+        <h1 className="text-3xl font-bold tracking-tight text-slate-900">
+          Verify your email
+        </h1>
+        <p className="text-sm text-slate-500">
+          Enter the 6-digit code sent to{" "}
+          <span className="font-medium text-slate-700">{email}</span>
+        </p>
+      </div>
+
+      <form
+        id="otp-form"
+        className="flex flex-col gap-5"
+        onSubmit={(event) => {
+          event.preventDefault();
+          handleVerify();
+        }}
+      >
+        {/* OTP slots */}
+        <div className="flex flex-col gap-2">
+          <label className="text-sm font-medium text-slate-500 ml-1">
+            Verification code
+          </label>
+          <InputOTP
+            id="otp"
+            name="otp"
+            maxLength={6}
+            value={otp}
+            onChange={(value) => {
+              setOtp(value);
+              setIsInvalid(false);
+            }}
+            autoComplete="one-time-code"
+            pattern={REGEXP_ONLY_DIGITS}
+          >
+            <InputOTPGroup className="gap-2">
+              <InputOTPSlot index={0} className="size-11 rounded-xl border-slate-200 bg-slate-50 text-base font-semibold focus:border-emerald-500" />
+              <InputOTPSlot index={1} className="size-11 rounded-xl border-slate-200 bg-slate-50 text-base font-semibold focus:border-emerald-500" />
+              <InputOTPSlot index={2} className="size-11 rounded-xl border-slate-200 bg-slate-50 text-base font-semibold focus:border-emerald-500" />
+              <InputOTPSlot index={3} className="size-11 rounded-xl border-slate-200 bg-slate-50 text-base font-semibold focus:border-emerald-500" />
+              <InputOTPSlot index={4} className="size-11 rounded-xl border-slate-200 bg-slate-50 text-base font-semibold focus:border-emerald-500" />
+              <InputOTPSlot index={5} className="size-11 rounded-xl border-slate-200 bg-slate-50 text-base font-semibold focus:border-emerald-500" />
+            </InputOTPGroup>
+          </InputOTP>
+
+          {isInvalid && (
+            <p className="text-red-500 text-xs ml-1">
+              Please enter the 6-digit code.
+            </p>
+          )}
+          {isOtpExpired ? (
+            <p className="text-xs text-amber-600 ml-1">
+              This code has expired. Please request a new one.
+            </p>
+          ) : (
+            expiresAt && (
+              <p className="text-xs text-slate-500 ml-1">
+                Code expires in{" "}
+                <span className="font-semibold text-emerald-600">
+                  {formatRemainingTime()}
+                </span>
+              </p>
+            )
+          )}
+        </div>
+
+        {/* Actions */}
+        <div className="flex gap-3">
+          <button
+            type="button"
+            onClick={handleResend}
+            disabled={resendPending}
+            className="flex-1 h-12 rounded-full border-2 border-slate-200 text-md font-semibold text-slate-600 hover:border-emerald-300 hover:text-emerald-700 transition-all duration-200 disabled:opacity-50"
+          >
+            {resendPending ? (
+              <span className="flex items-center justify-center gap-2">
+                <Spinner />
+                Resending...
+              </span>
             ) : (
-              expiresAt && (
-                <FieldDescription>
-                  Code expires in {formatRemainingTime()}.
-                </FieldDescription>
-              )
+              "Resend code"
             )}
-          </Field>
-        </form>
-      </CardContent>
+          </button>
 
-      <CardFooter className="flex justify-between gap-3">
-        <Button
-          type="button"
-          variant="outline"
-          onClick={handleResend}
-          disabled={resendPending}
-        >
-          {resendPending ? (
-            <>
-              <Spinner />
-              Resending...
-            </>
-          ) : (
-            "Resend code"
-          )}
-        </Button>
-        <Button
-          type="submit"
-          form="otp-form"
-          disabled={verifyPending || isOtpExpired}
-        >
-          {verifyPending ? (
-            <>
-              <Spinner />
-              Verifying...
-            </>
-          ) : (
-            "Verify"
-          )}
-        </Button>
-      </CardFooter>
-    </Card>
+          <Button
+            type="submit"
+            form="otp-form"
+            disabled={verifyPending || isOtpExpired}
+            className="flex-1 h-12 bg-emerald-500 hover:bg-emerald-600 text-white font-semibold rounded-full text-md tracking-wide transition-all duration-200 shadow-lg shadow-emerald-500/25"
+          >
+            {verifyPending ? (
+              <>
+                <Spinner />
+                Verifying...
+              </>
+            ) : (
+              "Verify"
+            )}
+          </Button>
+        </div>
+      </form>
+    </div>
   );
 }

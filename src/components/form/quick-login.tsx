@@ -71,7 +71,7 @@ export default function QuickLogin({ accounts }: { accounts: DemoAccount[] }) {
               key={account.email}
               type="button"
               variant="outline"
-              size="sm"
+              size="lg"
               disabled={isPending}
               onClick={() => handleQuickLogin(account)}
             >
