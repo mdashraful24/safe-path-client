@@ -16,6 +16,7 @@ import {
   verifyAccountRestore,
 } from "@/api";
 import { getErrorStatus } from "@/lib/utils";
+import type { ApiResponse, User } from "@/types";
 
 export function useRegistration() {
   return useMutation({
@@ -36,14 +37,26 @@ export function useResendRegistrationOtp() {
 }
 
 export function useLogin() {
+  const queryClient = useQueryClient();
+
   return useMutation({
     mutationFn: userLogin,
+    onSuccess: () => {
+      queryClient.invalidateQueries({ queryKey: ["USER"] });
+      queryClient.invalidateQueries({ queryKey: ["SESSION"] });
+    },
   });
 }
 
 export function useGoogleOAuth() {
+  const queryClient = useQueryClient();
+
   return useMutation({
     mutationFn: googleOAuth,
+    onSuccess: () => {
+      queryClient.invalidateQueries({ queryKey: ["USER"] });
+      queryClient.invalidateQueries({ queryKey: ["SESSION"] });
+    },
   });
 }
 
@@ -53,7 +66,12 @@ export function useLogout() {
   return useMutation({
     mutationFn: userLogout,
     onSuccess: () => {
+      queryClient.setQueryData<ApiResponse<User | null>>(
+        ["SESSION"],
+        (old) => (old ? { ...old, data: null } : old),
+      );
       queryClient.removeQueries({ queryKey: ["USER"] });
+      queryClient.invalidateQueries({ queryKey: ["SESSION"] });
     },
   });
 }
