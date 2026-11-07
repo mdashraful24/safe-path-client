@@ -1,6 +1,10 @@
 # SafePath Client
 
-**SafePath** is a full-stack community safety platform for reporting, reviewing, and following local safety incidents in real time. This repository contains the **SafePath web client**, a Next.js 16 application that provides the public incident feed, authentication flows, a personal dashboard, and the administrator and super-admin consoles.
+**SafePath** is a full-stack community safety platform designed to help people report, discover, and track local safety incidents. It provides a centralized space where users can share incident reports, stay informed about community safety concerns, and engage in discussions to raise awareness.
+
+The platform consists of a **Next.js web client** and a **RESTful backend API**, working together to deliver a complete incident reporting and management experience. Users can register and authenticate, submit incident reports with image uploads, browse approved public incidents, track their own reports, and participate in discussions through comments. They can also manage their personal accounts and submit account-related requests.
+
+SafePath also includes dedicated **Admin and Super Admin dashboards** for platform management. Administrators can review and approve or reject incident reports, moderate comments, manage user accounts, and handle account lifecycle requests. These features help maintain reliable incident information, responsible community engagement, and effective platform administration.
 
 <div align="center">
   <img height="500" src="https://drive.google.com/uc?export=view&id=1h1nEyMjruNqskdQNG-fE27pqd26ZJLdd" />
