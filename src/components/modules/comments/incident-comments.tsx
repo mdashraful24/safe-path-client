@@ -25,7 +25,7 @@ import { toast } from "@/components/ui/toast";
 import {
   useCreateComment,
   useDeleteComment,
-  useGetMe,
+  useGetSession,
   useIncidentComments,
   useUpdateComment,
 } from "@/hooks";
@@ -41,7 +41,7 @@ export default function IncidentComments({
 }: {
   incidentId: string;
 }) {
-  const { data: meData } = useGetMe();
+  const { data: meData } = useGetSession();
   const currentUser = meData?.data;
 
   const [page, setPage] = useState(1);

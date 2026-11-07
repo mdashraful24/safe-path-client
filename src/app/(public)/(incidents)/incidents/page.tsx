@@ -62,14 +62,15 @@ export default function IncidentsPage() {
           <h1 className="text-3xl font-extrabold tracking-tight text-slate-900 dark:text-white">
             Community Incidents
           </h1>
-          <p className="mt-1 text-sm text-slate-500 dark:text-slate-400 max-w-xl">
-            Browse verified safety reports, track trends in your neighborhood, and stay aware of ongoing concerns.
+          <p className="mt-1 text-md dark:text-slate-400 max-w-xl">
+            Browse verified safety reports, track trends in your neighborhood,
+            and stay aware of ongoing concerns.
           </p>
         </div>
 
         <Link
           href="/dashboard/incidents/new"
-          className="inline-flex items-center gap-2 rounded-full bg-emerald-500 hover:bg-emerald-600 px-5 py-2.5 text-sm font-semibold text-white shadow-sm shadow-emerald-500/20 transition-all hover:shadow-md hover:shadow-emerald-500/30 shrink-0 self-start sm:self-auto"
+          className="inline-flex items-center gap-2 rounded-full bg-emerald-600 hover:bg-emerald-500 px-5 py-2.5 text-sm font-semibold text-white shadow-sm shadow-emerald-500/20 transition-all hover:shadow-md hover:shadow-emerald-500/30 shrink-0 self-start sm:self-auto"
         >
           <PlusCircle className="size-4" />
           <span>Report incident</span>
@@ -83,6 +84,7 @@ export default function IncidentsPage() {
           <Search className="absolute left-3.5 top-1/2 -translate-y-1/2 size-4 text-slate-400" />
           <input
             type="text"
+            autoComplete="off"
             placeholder="Search keywords, details..."
             value={search}
             onChange={(event) => {
@@ -94,10 +96,11 @@ export default function IncidentsPage() {
         </div>
 
         {/* Area Filter */}
-        <div className="relative sm:w-56">
+        <div className="relative sm:w-60">
           <MapPin className="absolute left-3.5 top-1/2 -translate-y-1/2 size-4 text-slate-400" />
           <input
             type="text"
+            autoComplete="off"
             placeholder="Filter area / street..."
             value={area}
             onChange={(event) => {
@@ -142,7 +145,8 @@ export default function IncidentsPage() {
             No incidents found
           </h3>
           <p className="mt-1 text-sm text-slate-500 max-w-sm">
-            We couldn't find any verified incident matching your search filters. Try adjusting your search query or area.
+            We couldn't find any verified incident matching your search filters.
+            Try adjusting your search query or area.
           </p>
         </div>
       ) : (

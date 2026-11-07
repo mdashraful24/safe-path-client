@@ -1,6 +1,11 @@
+import type { Metadata } from "next";
 import { type ReactNode, Suspense } from "react";
 import Footer from "@/components/layout/public/footer";
 import Header from "@/components/layout/public/header";
+
+export const metadata: Metadata = {
+  title: "Incident Feed",
+};
 
 export default function IncidentsLayout({ children }: { children: ReactNode }) {
   return (

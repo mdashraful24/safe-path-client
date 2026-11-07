@@ -5,7 +5,6 @@ import Link from "next/link";
 import { useParams, useRouter } from "next/navigation";
 import { Suspense, useState } from "react";
 import StatusBadge from "@/components/dashboard/status-badge";
-import IncidentForm from "@/components/modules/incidents/incident-form";
 import { Button, buttonVariants } from "@/components/ui/button";
 import {
   Card,
@@ -26,7 +25,7 @@ import { Spinner } from "@/components/ui/spinner";
 import { toast } from "@/components/ui/toast";
 import { useDeleteMyIncident, useMyIncident } from "@/hooks";
 import { formatDate, formatDateTime, humanize } from "@/lib/format";
-import { getErrorMessage } from "@/lib/utils";
+import { cn, getErrorMessage } from "@/lib/utils";
 
 export default function MyIncidentDetailPage() {
   return (
@@ -117,7 +116,17 @@ function MyIncidentDetailContent() {
               {formatDate(incident.incidentDate)}
             </p>
           </div>
-          <StatusBadge value={incident.status} />
+          <div className="flex flex-wrap items-center gap-2">
+            <StatusBadge value={incident.status} />
+            {canEdit && (
+              <Link
+                href={`/dashboard/incidents/${incident.id}/edit`}
+                className={cn(buttonVariants({ size: "sm" }), "rounded-full")}
+              >
+                Edit report
+              </Link>
+            )}
+          </div>
         </div>
       </div>
 
@@ -182,33 +191,23 @@ function MyIncidentDetailContent() {
       </Card>
 
       {canEdit ? (
-        <>
-          <div>
-            <h2 className="text-lg font-semibold">Edit report</h2>
-            <p className="text-sm text-muted-foreground">
-              You can edit this report until an administrator reviews it.
-            </p>
-          </div>
-          <IncidentForm incident={incident} />
-
-          <Card>
-            <CardHeader>
-              <CardTitle>Delete report</CardTitle>
-              <CardDescription>
-                Remove this pending report and its image permanently.
-              </CardDescription>
-            </CardHeader>
-            <CardContent>
-              <Button
-                type="button"
-                variant="destructive"
-                onClick={() => setDeleteOpen(true)}
-              >
-                Delete report
-              </Button>
-            </CardContent>
-          </Card>
-        </>
+        <Card>
+          <CardHeader>
+            <CardTitle>Delete report</CardTitle>
+            <CardDescription>
+              Remove this pending report and its image permanently.
+            </CardDescription>
+          </CardHeader>
+          <CardContent>
+            <Button
+              type="button"
+              variant="destructive"
+              onClick={() => setDeleteOpen(true)}
+            >
+              Delete report
+            </Button>
+          </CardContent>
+        </Card>
       ) : (
         <p className="rounded-lg border bg-muted/40 p-3 text-sm text-muted-foreground">
           This report has already been reviewed and can no longer be edited or

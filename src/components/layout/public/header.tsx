@@ -14,14 +14,14 @@ import Logo from "@/components/brand/logo";
 import { Button } from "@/components/ui/button";
 import { toast } from "@/components/ui/toast";
 import UserAvatar from "@/components/ui/user-avatar";
-import { useGetMe, useLogout } from "@/hooks";
+import { useGetSession, useLogout } from "@/hooks";
 import { cn, getErrorMessage } from "@/lib/utils";
 
 export default function Header() {
   const router = useRouter();
   const pathname = usePathname();
   const queryClient = useQueryClient();
-  const { data } = useGetMe();
+  const { data } = useGetSession();
   const { mutate: logout, isPending } = useLogout();
 
   const user = data?.data;

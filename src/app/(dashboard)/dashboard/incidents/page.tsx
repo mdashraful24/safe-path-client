@@ -51,7 +51,8 @@ export default function MyIncidentsPage() {
             My Incident Reports
           </h1>
           <p className="text-sm text-slate-500 dark:text-slate-400">
-            Track your submitted safety reports and administrative review status.
+            Track your submitted safety reports and administrative review
+            status.
           </p>
         </div>
 
@@ -70,6 +71,7 @@ export default function MyIncidentsPage() {
           <Search className="absolute left-3.5 top-1/2 -translate-y-1/2 size-4 text-slate-400" />
           <input
             type="text"
+            autoComplete="off"
             placeholder="Search within your reports..."
             value={search}
             onChange={(event) => {

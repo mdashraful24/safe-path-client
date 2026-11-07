@@ -176,16 +176,34 @@ export default function VerifyAccountForm() {
               setOtp(value);
               setIsInvalid(false);
             }}
-            autoComplete="one-time-code"
+            autoComplete="off"
             pattern={REGEXP_ONLY_DIGITS}
           >
             <InputOTPGroup className="gap-2">
-              <InputOTPSlot index={0} className="size-11 rounded-xl border-slate-200 bg-slate-50 text-base font-semibold focus:border-emerald-500" />
-              <InputOTPSlot index={1} className="size-11 rounded-xl border-slate-200 bg-slate-50 text-base font-semibold focus:border-emerald-500" />
-              <InputOTPSlot index={2} className="size-11 rounded-xl border-slate-200 bg-slate-50 text-base font-semibold focus:border-emerald-500" />
-              <InputOTPSlot index={3} className="size-11 rounded-xl border-slate-200 bg-slate-50 text-base font-semibold focus:border-emerald-500" />
-              <InputOTPSlot index={4} className="size-11 rounded-xl border-slate-200 bg-slate-50 text-base font-semibold focus:border-emerald-500" />
-              <InputOTPSlot index={5} className="size-11 rounded-xl border-slate-200 bg-slate-50 text-base font-semibold focus:border-emerald-500" />
+              <InputOTPSlot
+                index={0}
+                className="size-11 rounded-xl border-slate-200 bg-slate-50 text-base font-semibold focus:border-emerald-500"
+              />
+              <InputOTPSlot
+                index={1}
+                className="size-11 rounded-xl border-slate-200 bg-slate-50 text-base font-semibold focus:border-emerald-500"
+              />
+              <InputOTPSlot
+                index={2}
+                className="size-11 rounded-xl border-slate-200 bg-slate-50 text-base font-semibold focus:border-emerald-500"
+              />
+              <InputOTPSlot
+                index={3}
+                className="size-11 rounded-xl border-slate-200 bg-slate-50 text-base font-semibold focus:border-emerald-500"
+              />
+              <InputOTPSlot
+                index={4}
+                className="size-11 rounded-xl border-slate-200 bg-slate-50 text-base font-semibold focus:border-emerald-500"
+              />
+              <InputOTPSlot
+                index={5}
+                className="size-11 rounded-xl border-slate-200 bg-slate-50 text-base font-semibold focus:border-emerald-500"
+              />
             </InputOTPGroup>
           </InputOTP>
 

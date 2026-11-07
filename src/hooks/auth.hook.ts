@@ -1,7 +1,8 @@
-import { useMutation, useQuery } from "@tanstack/react-query";
+import { useMutation, useQuery, useQueryClient } from "@tanstack/react-query";
 import {
   forgotPassword,
   getMe,
+  getSession,
   googleOAuth,
   refreshToken,
   requestAccountRestore,
@@ -47,8 +48,13 @@ export function useGoogleOAuth() {
 }
 
 export function useLogout() {
+  const queryClient = useQueryClient();
+
   return useMutation({
     mutationFn: userLogout,
+    onSuccess: () => {
+      queryClient.removeQueries({ queryKey: ["USER"] });
+    },
   });
 }
 
@@ -76,6 +82,14 @@ export function useGetMe() {
         return getMe();
       }
     },
+    retry: false,
+  });
+}
+
+export function useGetSession() {
+  return useQuery({
+    queryKey: ["SESSION"],
+    queryFn: getSession,
     retry: false,
   });
 }

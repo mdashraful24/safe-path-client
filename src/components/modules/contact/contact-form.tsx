@@ -123,7 +123,9 @@ export default function ContactForm() {
 
             return (
               <div className="flex flex-col gap-2">
-                <Label htmlFor={field.name}>Full name <span className="text-destructive">*</span></Label>
+                <Label htmlFor={field.name}>
+                  Full name <span className="text-destructive">*</span>
+                </Label>
                 <Input
                   id={field.name}
                   name={field.name}
@@ -158,7 +160,9 @@ export default function ContactForm() {
 
             return (
               <div className="flex flex-col gap-2">
-                <Label htmlFor={field.name}>Email address <span className="text-destructive">*</span></Label>
+                <Label htmlFor={field.name}>
+                  Email address <span className="text-destructive">*</span>
+                </Label>
                 <Input
                   id={field.name}
                   name={field.name}
@@ -189,7 +193,10 @@ export default function ContactForm() {
         <form.Field name="topic">
           {(field) => (
             <div className="flex flex-col gap-2">
-              <Label htmlFor={field.name}>What can we help with? <span className="text-destructive">*</span></Label>
+              <Label htmlFor={field.name}>
+                What can we help with?{" "}
+                <span className="text-destructive">*</span>
+              </Label>
               <NativeSelect
                 id={field.name}
                 name={field.name}
@@ -217,7 +224,9 @@ export default function ContactForm() {
 
             return (
               <div className="flex flex-col gap-2">
-                <Label htmlFor={field.name}>Subject <span className="text-destructive">*</span></Label>
+                <Label htmlFor={field.name}>
+                  Subject <span className="text-destructive">*</span>
+                </Label>
                 <Input
                   id={field.name}
                   name={field.name}
@@ -253,7 +262,9 @@ export default function ContactForm() {
             return (
               <div className="flex flex-col gap-2">
                 <div className="flex items-center justify-between gap-3">
-                  <Label htmlFor={field.name}>Message <span className="text-destructive">*</span></Label>
+                  <Label htmlFor={field.name}>
+                    Message <span className="text-destructive">*</span>
+                  </Label>
                   <span className="text-xs text-slate-500 dark:text-slate-400">
                     {field.state.value.length}/5000
                   </span>

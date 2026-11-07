@@ -208,7 +208,7 @@ export default function RestoreAccountForm() {
                   setEmail(event.target.value);
                   setError("");
                 }}
-                autoComplete="email"
+                autoComplete="off"
                 aria-invalid={Boolean(error)}
                 className="w-full rounded-xl bg-slate-50 border-0 border-b-2 border-slate-200 focus:border-emerald-500 px-4 pt-7 pb-3 text-sm text-slate-900 placeholder-transparent focus:outline-none focus:bg-emerald-50/30 transition-all duration-200"
               />
@@ -291,16 +291,34 @@ export default function RestoreAccountForm() {
               setOtp(value);
               setError("");
             }}
-            autoComplete="one-time-code"
+            autoComplete="off"
             pattern={REGEXP_ONLY_DIGITS}
           >
             <InputOTPGroup className="gap-2">
-              <InputOTPSlot index={0} className="size-11 rounded-xl border-slate-200 bg-slate-50 text-base font-semibold focus:border-emerald-500" />
-              <InputOTPSlot index={1} className="size-11 rounded-xl border-slate-200 bg-slate-50 text-base font-semibold focus:border-emerald-500" />
-              <InputOTPSlot index={2} className="size-11 rounded-xl border-slate-200 bg-slate-50 text-base font-semibold focus:border-emerald-500" />
-              <InputOTPSlot index={3} className="size-11 rounded-xl border-slate-200 bg-slate-50 text-base font-semibold focus:border-emerald-500" />
-              <InputOTPSlot index={4} className="size-11 rounded-xl border-slate-200 bg-slate-50 text-base font-semibold focus:border-emerald-500" />
-              <InputOTPSlot index={5} className="size-11 rounded-xl border-slate-200 bg-slate-50 text-base font-semibold focus:border-emerald-500" />
+              <InputOTPSlot
+                index={0}
+                className="size-11 rounded-xl border-slate-200 bg-slate-50 text-base font-semibold focus:border-emerald-500"
+              />
+              <InputOTPSlot
+                index={1}
+                className="size-11 rounded-xl border-slate-200 bg-slate-50 text-base font-semibold focus:border-emerald-500"
+              />
+              <InputOTPSlot
+                index={2}
+                className="size-11 rounded-xl border-slate-200 bg-slate-50 text-base font-semibold focus:border-emerald-500"
+              />
+              <InputOTPSlot
+                index={3}
+                className="size-11 rounded-xl border-slate-200 bg-slate-50 text-base font-semibold focus:border-emerald-500"
+              />
+              <InputOTPSlot
+                index={4}
+                className="size-11 rounded-xl border-slate-200 bg-slate-50 text-base font-semibold focus:border-emerald-500"
+              />
+              <InputOTPSlot
+                index={5}
+                className="size-11 rounded-xl border-slate-200 bg-slate-50 text-base font-semibold focus:border-emerald-500"
+              />
             </InputOTPGroup>
           </InputOTP>
 
@@ -318,9 +336,7 @@ export default function RestoreAccountForm() {
               </p>
             )
           )}
-          {error && (
-            <p className="text-red-500 text-xs ml-1">{error}</p>
-          )}
+          {error && <p className="text-red-500 text-xs ml-1">{error}</p>}
         </div>
 
         {/* Actions */}

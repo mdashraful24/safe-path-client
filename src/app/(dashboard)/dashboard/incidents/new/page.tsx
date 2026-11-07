@@ -1,5 +1,10 @@
+import type { Metadata } from "next";
 import Link from "next/link";
 import IncidentForm from "@/components/modules/incidents/incident-form";
+
+export const metadata: Metadata = {
+  title: "New Report",
+};
 
 export default function NewIncidentPage() {
   return (

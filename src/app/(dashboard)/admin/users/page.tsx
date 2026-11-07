@@ -1,5 +1,6 @@
 "use client";
 
+import Image from "next/image";
 import Link from "next/link";
 import { useState } from "react";
 import StatusBadge from "@/components/dashboard/status-badge";
@@ -33,7 +34,7 @@ import {
   useRestoreDeletedAccount,
   useUpdateUserStatus,
 } from "@/hooks";
-import { formatDate, formatDateTime } from "@/lib/format";
+import { formatDate, formatDateTime, humanize } from "@/lib/format";
 import { getErrorMessage } from "@/lib/utils";
 import type { User, UserRole, UserStatus } from "@/types";
 
@@ -84,6 +85,18 @@ export default function AdminUsersPage() {
 
   const users = data?.data ?? [];
   const meta = data?.meta;
+  const detailUser = userDetails.data?.data;
+  const hasDeletionInfo = Boolean(
+    detailUser?.deletionRequestedAt ||
+      detailUser?.deletionRequestReason ||
+      detailUser?.deletionApprovedAt ||
+      detailUser?.deletedAt ||
+      detailUser?.restoreDeadline ||
+      detailUser?.restoredAt ||
+      detailUser?.purgeAfter ||
+      detailUser?.deletionRejectedAt ||
+      detailUser?.deletionRejectionReason,
+  );
 
   const handleStatusChange = () => {
     if (!statusTarget) return;
@@ -243,10 +256,10 @@ export default function AdminUsersPage() {
                       </TableCell>
                       <TableCell>{formatDate(user.createdAt)}</TableCell>
                       <TableCell>
-                        <div className="flex justify-end gap-1">
+                        <div className="flex justify-end gap-2">
                           <Button
                             type="button"
-                            variant="ghost"
+                            variant="outline"
                             size="sm"
                             onClick={() => setSelectedUserId(user.id)}
                           >
@@ -256,7 +269,7 @@ export default function AdminUsersPage() {
                             user.status === "BLOCKED") && (
                             <Button
                               type="button"
-                              variant="outline"
+                              variant="destructive"
                               size="sm"
                               onClick={() => setStatusTarget(user)}
                             >
@@ -312,69 +325,225 @@ export default function AdminUsersPage() {
           if (!open) setSelectedUserId(null);
         }}
       >
-        <DialogContent className="sm:max-w-lg">
-          <DialogHeader>
-            <DialogTitle>User details</DialogTitle>
-            <DialogDescription>
-              Account lifecycle and activity information.
-            </DialogDescription>
-          </DialogHeader>
+        <DialogContent className="overflow-hidden rounded-3xl p-0 sm:max-w-2xl">
+          <div className="relative overflow-hidden border-b border-slate-800/40 bg-linear-to-br from-slate-950 via-slate-900 to-emerald-950 px-6 py-6 text-white">
+            <div
+              aria-hidden="true"
+              className="pointer-events-none absolute -right-16 -top-20 size-52 rounded-full bg-emerald-500/25 blur-3xl"
+            />
+            <div className="relative flex items-start gap-4">
+              {detailUser?.imageUrl ? (
+                <Image
+                  src={detailUser.imageUrl}
+                  alt={detailUser.name}
+                  width={64}
+                  height={64}
+                  className="size-16 shrink-0 rounded-2xl object-cover ring-2 ring-white/20"
+                />
+              ) : (
+                <div className="flex size-16 shrink-0 items-center justify-center rounded-2xl bg-white/10 text-xl font-bold text-white ring-2 ring-white/20">
+                  {detailUser?.name.charAt(0).toUpperCase() ?? "?"}
+                </div>
+              )}
+              <div className="min-w-0 flex-1">
+                <DialogTitle className="truncate text-lg font-bold text-white">
+                  {detailUser?.name ?? "User details"}
+                </DialogTitle>
+                <DialogDescription className="mt-0.5 break-all text-sm text-slate-300">
+                  {detailUser?.email ??
+                    "Account lifecycle and activity information."}
+                </DialogDescription>
+                {detailUser && (
+                  <div className="mt-3 flex flex-wrap items-center gap-2">
+                    <span className="inline-flex items-center gap-1.5 rounded-full border border-emerald-400/20 bg-emerald-400/10 px-2.5 py-1 text-[11px] font-semibold text-emerald-300">
+                      {humanize(detailUser.role)}
+                    </span>
+                    <StatusBadge value={detailUser.status} />
+                    <span className="inline-flex items-center gap-1.5 rounded-full border border-white/10 bg-white/5 px-2.5 py-1 text-[11px] font-semibold text-slate-300">
+                      {detailUser.authProvider === "GOOGLE"
+                        ? "Google"
+                        : "Email & password"}
+                    </span>
+                  </div>
+                )}
+              </div>
+            </div>
+          </div>
 
           {userDetails.isPending ? (
-            <div className="flex justify-center py-8">
+            <div className="flex justify-center py-12">
               <Spinner />
             </div>
-          ) : userDetails.data?.data ? (
-            <div className="flex flex-col gap-3 text-sm">
-              <div className="grid grid-cols-2 gap-3">
-                <Field label="Name" value={userDetails.data.data.name} />
-                <Field label="Email" value={userDetails.data.data.email} />
-                <Field
-                  label="Role"
-                  value={userDetails.data.data.role.replace("_", " ")}
-                />
-                <Field
-                  label="Status"
-                  value={userDetails.data.data.status.replace("_", " ")}
-                />
-                <Field
-                  label="Email verified"
-                  value={userDetails.data.data.emailVerified ? "Yes" : "No"}
-                />
-                <Field
-                  label="Sign-in method"
-                  value={userDetails.data.data.authProvider}
-                />
-                <Field
-                  label="Joined"
-                  value={formatDateTime(userDetails.data.data.createdAt)}
-                />
-                <Field
-                  label="Last login"
-                  value={formatDateTime(userDetails.data.data.lastLoginAt)}
-                />
-                <Field
-                  label="Deletion requested"
-                  value={formatDateTime(
-                    userDetails.data.data.deletionRequestedAt,
-                  )}
-                />
-                <Field
-                  label="Restore deadline"
-                  value={formatDateTime(userDetails.data.data.restoreDeadline)}
-                />
-              </div>
-              {userDetails.data.data.deletionRequestReason && (
-                <Field
-                  label="Deletion reason"
-                  value={userDetails.data.data.deletionRequestReason}
-                />
+          ) : detailUser ? (
+            <div className="max-h-[55vh] overflow-y-auto px-6 py-6">
+              <section className="flex flex-col gap-3">
+                <h3 className="text-[11px] font-semibold uppercase tracking-[0.16em] text-slate-500 dark:text-slate-400">
+                  Account identity
+                </h3>
+                <div className="grid gap-3 sm:grid-cols-2">
+                  <Field label="Full name" value={detailUser.name} />
+                  <Field label="Email address" value={detailUser.email} />
+                  <Field label="Role" value={humanize(detailUser.role)} />
+                  <Field
+                    label="Sign-in method"
+                    value={
+                      detailUser.authProvider === "GOOGLE"
+                        ? "Google"
+                        : "Email & password"
+                    }
+                  />
+                  <Field
+                    label="Email verification"
+                    value={
+                      detailUser.emailVerified ? "Verified" : "Not verified"
+                    }
+                  />
+                  <Field label="User ID" value={detailUser.id} mono />
+                </div>
+              </section>
+
+              <div className="my-5 h-px bg-slate-100 dark:bg-slate-800" />
+
+              <section className="flex flex-col gap-3">
+                <h3 className="text-[11px] font-semibold uppercase tracking-[0.16em] text-slate-500 dark:text-slate-400">
+                  Account activity
+                </h3>
+                <div className="grid gap-3 sm:grid-cols-2">
+                  <Field
+                    label="Joined"
+                    value={formatDateTime(detailUser.createdAt)}
+                  />
+                  <Field
+                    label="Last login"
+                    value={formatDateTime(detailUser.lastLoginAt)}
+                  />
+                </div>
+              </section>
+
+              {hasDeletionInfo && (
+                <>
+                  <div className="my-5 h-px bg-slate-100 dark:bg-slate-800" />
+                  <section className="flex flex-col gap-3">
+                    <h3 className="text-[11px] font-semibold uppercase tracking-[0.16em] text-slate-500 dark:text-slate-400">
+                      Deletion & recovery
+                    </h3>
+                    <div className="grid gap-3 sm:grid-cols-2">
+                      {detailUser.deletionRequestedAt && (
+                        <Field
+                          label="Requested"
+                          value={formatDateTime(detailUser.deletionRequestedAt)}
+                        />
+                      )}
+                      {detailUser.deletionApprovedAt && (
+                        <Field
+                          label="Approved"
+                          value={formatDateTime(detailUser.deletionApprovedAt)}
+                        />
+                      )}
+                      {detailUser.deletedAt && (
+                        <Field
+                          label="Deleted"
+                          value={formatDateTime(detailUser.deletedAt)}
+                        />
+                      )}
+                      {detailUser.restoreDeadline && (
+                        <Field
+                          label="Restore deadline"
+                          value={formatDateTime(detailUser.restoreDeadline)}
+                        />
+                      )}
+                      {detailUser.restoredAt && (
+                        <Field
+                          label="Restored"
+                          value={formatDateTime(detailUser.restoredAt)}
+                        />
+                      )}
+                      {detailUser.purgeAfter && (
+                        <Field
+                          label="Purge after"
+                          value={formatDateTime(detailUser.purgeAfter)}
+                        />
+                      )}
+                      {detailUser.deletionRejectedAt && (
+                        <Field
+                          label="Rejected"
+                          value={formatDateTime(detailUser.deletionRejectedAt)}
+                        />
+                      )}
+                      {detailUser.deletionRejectionReason && (
+                        <Field
+                          label="Rejection reason"
+                          value={detailUser.deletionRejectionReason}
+                        />
+                      )}
+                    </div>
+                    {detailUser.deletionRequestReason && (
+                      <Field
+                        label="Deletion reason"
+                        value={detailUser.deletionRequestReason}
+                      />
+                    )}
+                  </section>
+                </>
               )}
             </div>
           ) : (
-            <p className="text-sm text-muted-foreground">
-              Could not load user details.
-            </p>
+            <div className="px-6 py-10 text-center">
+              <p className="text-sm text-muted-foreground">
+                Could not load user details.
+              </p>
+            </div>
+          )}
+
+          {detailUser && (
+            <div className="flex flex-col-reverse gap-2 border-t border-slate-100 bg-slate-50/70 px-6 py-4 sm:flex-row sm:items-center sm:justify-between dark:border-slate-800 dark:bg-slate-950/40">
+              <Button
+                type="button"
+                variant="outline"
+                onClick={() => setSelectedUserId(null)}
+              >
+                Close
+              </Button>
+              <div className="flex flex-col gap-2 sm:flex-row">
+                {(detailUser.status === "ACTIVE" ||
+                  detailUser.status === "BLOCKED") && (
+                  <Button
+                    type="button"
+                    variant={
+                      detailUser.status === "ACTIVE" ? "destructive" : "default"
+                    }
+                    onClick={() => {
+                      setSelectedUserId(null);
+                      setStatusTarget(detailUser);
+                    }}
+                  >
+                    {detailUser.status === "ACTIVE"
+                      ? "Block user"
+                      : "Unblock user"}
+                  </Button>
+                )}
+                {detailUser.status === "DELETED" && (
+                  <Button
+                    type="button"
+                    variant="outline"
+                    onClick={() => {
+                      setSelectedUserId(null);
+                      setRestoreTarget(detailUser);
+                    }}
+                  >
+                    Restore account
+                  </Button>
+                )}
+                {detailUser.status === "PENDING_DELETION" && (
+                  <Link
+                    href="/admin/deletion-requests"
+                    className={buttonVariants({ variant: "outline" })}
+                  >
+                    Review request
+                  </Link>
+                )}
+              </div>
+            </div>
           )}
         </DialogContent>
       </Dialog>
@@ -479,11 +648,29 @@ export default function AdminUsersPage() {
   );
 }
 
-function Field({ label, value }: { label: string; value: string }) {
+function Field({
+  label,
+  value,
+  mono = false,
+}: {
+  label: string;
+  value: string;
+  mono?: boolean;
+}) {
   return (
-    <div className="flex flex-col">
-      <span className="text-xs text-muted-foreground">{label}</span>
-      <span>{value}</span>
+    <div className="flex flex-col gap-1 rounded-2xl border border-slate-100 bg-slate-50/60 px-3.5 py-2.5 dark:border-slate-800 dark:bg-slate-950/30">
+      <span className="text-[10px] font-semibold uppercase tracking-[0.14em] text-slate-500 dark:text-slate-400">
+        {label}
+      </span>
+      <span
+        className={
+          mono
+            ? "break-all font-mono text-xs font-medium text-slate-700 dark:text-slate-300"
+            : "break-words text-sm font-medium text-slate-900 dark:text-white"
+        }
+      >
+        {value}
+      </span>
     </div>
   );
 }

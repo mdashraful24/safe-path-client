@@ -107,7 +107,7 @@ export default function RegisterForm() {
                     value={field.state.value}
                     onChange={(event) => field.handleChange(event.target.value)}
                     onBlur={field.handleBlur}
-                    autoComplete="name"
+                    autoComplete="off"
                     aria-invalid={isInvalid}
                     className="w-full rounded-xl bg-slate-50 border-0 border-b-2 border-slate-200 focus:border-emerald-500 px-4 pt-7 pb-3 text-sm text-slate-900 placeholder-transparent focus:outline-none focus:bg-emerald-50/30 transition-all duration-200"
                   />
@@ -148,7 +148,7 @@ export default function RegisterForm() {
                     value={field.state.value}
                     onChange={(event) => field.handleChange(event.target.value)}
                     onBlur={field.handleBlur}
-                    autoComplete="email"
+                    autoComplete="off"
                     aria-invalid={isInvalid}
                     className="w-full rounded-xl bg-slate-50 border-0 border-b-2 border-slate-200 focus:border-emerald-500 px-4 pt-7 pb-3 text-sm text-slate-900 placeholder-transparent focus:outline-none focus:bg-emerald-50/30 transition-all duration-200"
                   />
@@ -189,7 +189,7 @@ export default function RegisterForm() {
                     value={field.state.value}
                     onChange={(event) => field.handleChange(event.target.value)}
                     onBlur={field.handleBlur}
-                    autoComplete="new-password"
+                    autoComplete="off"
                     aria-invalid={isInvalid}
                     className="w-full rounded-xl bg-slate-50 border-0 border-b-2 border-slate-200 focus:border-emerald-500 px-4 pt-7 pb-3 pr-12 text-sm text-slate-900 placeholder-transparent focus:outline-none focus:bg-emerald-50/30 transition-all duration-200"
                   />
@@ -238,7 +238,7 @@ export default function RegisterForm() {
                     value={field.state.value}
                     onChange={(event) => field.handleChange(event.target.value)}
                     onBlur={field.handleBlur}
-                    autoComplete="new-password"
+                    autoComplete="off"
                     aria-invalid={isInvalid}
                     className="w-full rounded-xl bg-slate-50 border-0 border-b-2 border-slate-200 focus:border-emerald-500 px-4 pt-7 pb-3 pr-12 text-sm text-slate-900 placeholder-transparent focus:outline-none focus:bg-emerald-50/30 transition-all duration-200"
                   />

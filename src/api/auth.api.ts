@@ -58,6 +58,10 @@ export function getMe() {
   return apiClient<ApiResponse<User>>("/auth/me");
 }
 
+export function getSession() {
+  return apiClient<ApiResponse<User | null>>("/auth/session");
+}
+
 export function refreshToken() {
   return apiClient<ApiResponse<AuthTokens>>("/auth/refresh-token", {
     method: "POST",

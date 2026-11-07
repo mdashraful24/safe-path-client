@@ -136,7 +136,7 @@ export default function DashboardSidebar({
         </div>
 
         {/* Navigation Sections */}
-        <nav className="flex flex-col gap-5 px-1 overflow-y-auto max-h-[calc(100vh-280px)]">
+        <nav className="flex flex-col gap-5 px-1 overflow-y-auto max-h-[calc(100vh-240px)] scrollbar-none [-ms-overflow-style:none] [&::-webkit-scrollbar]:hidden">
           {/* Main menu */}
           <div className="flex flex-col gap-1">
             <span className="px-3 text-xs font-semibold uppercase tracking-wider dark:text-slate-500">

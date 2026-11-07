@@ -119,6 +119,7 @@ export default function IncidentForm({ incident }: { incident?: MyIncident }) {
               description: "Your incident report has been updated.",
               type: "success",
             });
+            router.push(`/dashboard/incidents/${incident.id}`);
           },
           onError: (error) => {
             toast.add({
