@@ -3,6 +3,7 @@
 import { Compass, Menu, PlusCircle } from "lucide-react";
 import Link from "next/link";
 import { usePathname } from "next/navigation";
+import ThemeToggle from "@/components/theme-toggle";
 import UserAvatar from "@/components/ui/user-avatar";
 import { useGetMe } from "@/hooks";
 
@@ -58,6 +59,7 @@ export default function DashboardTopbar({
 
       {/* Right Actions */}
       <div className="flex items-center gap-3">
+        <ThemeToggle />
         <Link
           href="/incidents"
           className="flex items-center gap-1.5 rounded-full bg-emerald-600 px-3.5 py-2 text-xs font-semibold text-white shadow-sm shadow-emerald-500/20 transition-all hover:shadow-md hover:shadow-emerald-500/30"

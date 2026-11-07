@@ -11,6 +11,7 @@ import {
 import Link from "next/link";
 import { usePathname, useRouter } from "next/navigation";
 import Logo from "@/components/brand/logo";
+import ThemeToggle from "@/components/theme-toggle";
 import { Button } from "@/components/ui/button";
 import { toast } from "@/components/ui/toast";
 import UserAvatar from "@/components/ui/user-avatar";
@@ -62,6 +63,7 @@ export default function Header() {
 
         {/* Right actions */}
         <div className="flex items-center gap-2">
+          <ThemeToggle />
           {/* Navigation Links */}
           <nav className="hidden md:flex items-center gap-1">
             {navLinks.map((link) => {
