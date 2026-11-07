@@ -6,8 +6,6 @@
   <img height="500" src="https://drive.google.com/uc?export=view&id=1h1nEyMjruNqskdQNG-fE27pqd26ZJLdd" />
 </div>
 
-> Replace the placeholder above with a real product screenshot, for example `docs/screenshot.png`.
-
 ---
 
 ## Table of Contents
