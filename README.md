@@ -6,7 +6,6 @@
   <img height="500" src="https://drive.google.com/uc?export=view&id=1h1nEyMjruNqskdQNG-fE27pqd26ZJLdd" />
 </div>
 
----
 
 ## Table of Contents
 
@@ -215,7 +214,7 @@ Set `NEXT_PUBLIC_API_URL` to your backend URL, including the `/api/v1` prefix:
 
 ```env
 NEXT_PUBLIC_API_URL=http://localhost:5000/api/v1
-NEXT_PUBLIC_GOOGLE_CLIENT_ID=
+NEXT_PUBLIC_GOOGLE_CLIENT_ID=YOUR_GOOGLE_CLIENT_ID
 ```
 
 Optionally add the demo account credentials to enable the quick-login buttons on the login page.
@@ -264,7 +263,7 @@ See [`.env.example`](./.env.example) for the complete template. Never commit rea
 | `bun run lint` | Run Biome checks |
 | `bun run format` | Format source files with Biome |
 
-The same commands work with `npm`, `pnpm`, or `yarn` if you prefer a different package manager.
+If you prefer a different package manager, use the equivalent commands: `npm run <script>`, `pnpm <script>`, or `yarn <script>`.
 
 ---
 
