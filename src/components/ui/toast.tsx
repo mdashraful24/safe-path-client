@@ -70,9 +70,9 @@ function Toaster({
       {children}
       <SonnerToaster
         theme={(theme ?? (appTheme as ToasterProps["theme"])) || "system"}
-        position="bottom-right"
+        position="top-right"
         richColors
-        closeButton
+        // closeButton
         {...props}
       />
     </>
