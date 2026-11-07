@@ -1,6 +1,6 @@
 "use client";
 
-import { Compass, Menu, PlusCircle } from "lucide-react";
+import { Compass, Menu } from "lucide-react";
 import Link from "next/link";
 import { usePathname } from "next/navigation";
 import ThemeToggle from "@/components/theme-toggle";
@@ -58,8 +58,7 @@ export default function DashboardTopbar({
       </div>
 
       {/* Right Actions */}
-      <div className="flex items-center gap-3">
-        <ThemeToggle />
+      <div className="flex items-center gap-4">
         <Link
           href="/incidents"
           className="flex items-center gap-1.5 rounded-full bg-emerald-600 px-3.5 py-2 text-xs font-semibold text-white shadow-sm shadow-emerald-500/20 transition-all hover:shadow-md hover:shadow-emerald-500/30"
@@ -75,6 +74,7 @@ export default function DashboardTopbar({
             className="size-8 rounded-full bg-slate-900 text-white dark:bg-emerald-500 text-xs ring-2 ring-slate-100 dark:ring-slate-800"
           />
         )}
+        <ThemeToggle />
       </div>
     </header>
   );

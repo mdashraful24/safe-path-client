@@ -2,6 +2,7 @@
 
 import { useState } from "react";
 import StatusBadge from "@/components/dashboard/status-badge";
+import { TableSkeleton } from "@/components/skeletons/admin-skeletons";
 import { Button } from "@/components/ui/button";
 import {
   Card,
@@ -258,9 +259,11 @@ export default function SuperAdminPage() {
           </div>
 
           {admins.isPending ? (
-            <div className="flex justify-center py-10">
-              <Spinner />
-            </div>
+            <TableSkeleton
+              columns={6}
+              rows={PAGE_SIZE}
+              label="Loading staff accounts"
+            />
           ) : (
             <>
               <div className="rounded-xl border">
@@ -383,9 +386,11 @@ export default function SuperAdminPage() {
           </div>
 
           {requests.isPending ? (
-            <div className="flex justify-center py-10">
-              <Spinner />
-            </div>
+            <TableSkeleton
+              columns={7}
+              rows={PAGE_SIZE}
+              label="Loading change requests"
+            />
           ) : (
             <>
               <div className="rounded-xl border">

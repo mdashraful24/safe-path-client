@@ -335,7 +335,9 @@ export default function DashboardSidebar({
       {/* Mobile Backdrop & Drawer */}
       {mobileOpen && (
         <div className="fixed inset-0 z-50 md:hidden">
-          <div
+          <button
+            type="button"
+            aria-label="Close navigation menu"
             className="fixed inset-0 bg-slate-900/50 backdrop-blur-sm transition-opacity"
             onClick={onMobileClose}
           />

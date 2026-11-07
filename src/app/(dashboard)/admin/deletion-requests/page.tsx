@@ -1,6 +1,7 @@
 "use client";
 
 import { useState } from "react";
+import { TableSkeleton } from "@/components/skeletons/admin-skeletons";
 import { Button } from "@/components/ui/button";
 import {
   Dialog,
@@ -170,9 +171,11 @@ export default function DeletionRequestsPage() {
       </div>
 
       {isPending ? (
-        <div className="flex justify-center py-16">
-          <Spinner />
-        </div>
+        <TableSkeleton
+          columns={6}
+          rows={PAGE_SIZE}
+          label="Loading deletion requests"
+        />
       ) : (
         <>
           <div className="rounded-xl border">

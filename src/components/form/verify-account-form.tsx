@@ -127,8 +127,9 @@ export default function VerifyAccountForm() {
   return (
     <div className="flex flex-col gap-7">
       {/* Icon badge */}
-      <div className="flex size-14 items-center justify-center rounded-2xl bg-emerald-50 ring-1 ring-emerald-200">
+      <div className="flex size-14 items-center justify-center rounded-2xl bg-emerald-50 dark:bg-emerald-500/10 ring-1 ring-emerald-200 dark:ring-emerald-500/30">
         <svg
+          aria-hidden="true"
           xmlns="http://www.w3.org/2000/svg"
           width="26"
           height="26"
@@ -145,12 +146,14 @@ export default function VerifyAccountForm() {
       </div>
 
       <div className="flex flex-col gap-1">
-        <h1 className="text-3xl font-bold tracking-tight text-slate-900">
+        <h1 className="text-3xl font-bold tracking-tight text-slate-900 dark:text-white">
           Verify your email
         </h1>
-        <p className="text-sm text-slate-500">
+        <p className="text-sm text-slate-500 dark:text-slate-400">
           Enter the 6-digit code sent to{" "}
-          <span className="font-medium text-slate-700">{email}</span>
+          <span className="font-medium text-slate-700 dark:text-slate-300">
+            {email}
+          </span>
         </p>
       </div>
 
@@ -164,7 +167,10 @@ export default function VerifyAccountForm() {
       >
         {/* OTP slots */}
         <div className="flex flex-col gap-2">
-          <label className="text-sm font-medium text-slate-500 ml-1">
+          <label
+            htmlFor="otp"
+            className="text-sm font-medium text-slate-500 dark:text-slate-400 ml-1"
+          >
             Verification code
           </label>
           <InputOTP
@@ -182,27 +188,27 @@ export default function VerifyAccountForm() {
             <InputOTPGroup className="gap-2">
               <InputOTPSlot
                 index={0}
-                className="size-11 rounded-xl border-slate-200 bg-slate-50 text-base font-semibold focus:border-emerald-500"
+                className="size-11 rounded-xl border-slate-200 dark:border-slate-700 bg-slate-50 dark:bg-slate-900 text-base font-semibold focus:border-emerald-500"
               />
               <InputOTPSlot
                 index={1}
-                className="size-11 rounded-xl border-slate-200 bg-slate-50 text-base font-semibold focus:border-emerald-500"
+                className="size-11 rounded-xl border-slate-200 dark:border-slate-700 bg-slate-50 dark:bg-slate-900 text-base font-semibold focus:border-emerald-500"
               />
               <InputOTPSlot
                 index={2}
-                className="size-11 rounded-xl border-slate-200 bg-slate-50 text-base font-semibold focus:border-emerald-500"
+                className="size-11 rounded-xl border-slate-200 dark:border-slate-700 bg-slate-50 dark:bg-slate-900 text-base font-semibold focus:border-emerald-500"
               />
               <InputOTPSlot
                 index={3}
-                className="size-11 rounded-xl border-slate-200 bg-slate-50 text-base font-semibold focus:border-emerald-500"
+                className="size-11 rounded-xl border-slate-200 dark:border-slate-700 bg-slate-50 dark:bg-slate-900 text-base font-semibold focus:border-emerald-500"
               />
               <InputOTPSlot
                 index={4}
-                className="size-11 rounded-xl border-slate-200 bg-slate-50 text-base font-semibold focus:border-emerald-500"
+                className="size-11 rounded-xl border-slate-200 dark:border-slate-700 bg-slate-50 dark:bg-slate-900 text-base font-semibold focus:border-emerald-500"
               />
               <InputOTPSlot
                 index={5}
-                className="size-11 rounded-xl border-slate-200 bg-slate-50 text-base font-semibold focus:border-emerald-500"
+                className="size-11 rounded-xl border-slate-200 dark:border-slate-700 bg-slate-50 dark:bg-slate-900 text-base font-semibold focus:border-emerald-500"
               />
             </InputOTPGroup>
           </InputOTP>
@@ -213,14 +219,14 @@ export default function VerifyAccountForm() {
             </p>
           )}
           {isOtpExpired ? (
-            <p className="text-xs text-amber-600 ml-1">
+            <p className="text-xs text-amber-600 dark:text-amber-400 ml-1">
               This code has expired. Please request a new one.
             </p>
           ) : (
             expiresAt && (
-              <p className="text-xs text-slate-500 ml-1">
+              <p className="text-xs text-slate-500 dark:text-slate-400 ml-1">
                 Code expires in{" "}
-                <span className="font-semibold text-emerald-600">
+                <span className="font-semibold text-emerald-600 dark:text-emerald-400">
                   {formatRemainingTime()}
                 </span>
               </p>
@@ -234,7 +240,7 @@ export default function VerifyAccountForm() {
             type="button"
             onClick={handleResend}
             disabled={resendPending}
-            className="flex-1 h-12 rounded-full border-2 border-slate-200 text-md font-semibold text-slate-600 hover:border-emerald-300 hover:text-emerald-700 transition-all duration-200 disabled:opacity-50"
+            className="flex-1 h-12 rounded-full border-2 border-slate-200 dark:border-slate-700 text-md font-semibold text-slate-600 dark:text-slate-400 hover:border-emerald-300 dark:hover:border-emerald-600 hover:text-emerald-700 dark:hover:text-emerald-300 transition-all duration-200 disabled:opacity-50"
           >
             {resendPending ? (
               <span className="flex items-center justify-center gap-2">

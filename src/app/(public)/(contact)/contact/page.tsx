@@ -1,7 +1,6 @@
 import {
   ArrowRight,
   BookOpen,
-  ChevronRight,
   Clock,
   MapPin,
   MessageSquare,

@@ -5,6 +5,7 @@ import Link from "next/link";
 import { useParams, useRouter } from "next/navigation";
 import { Suspense, useState } from "react";
 import StatusBadge from "@/components/dashboard/status-badge";
+import { IncidentDetailSkeleton } from "@/components/skeletons/incident-skeletons";
 import { Button, buttonVariants } from "@/components/ui/button";
 import {
   Card,
@@ -29,13 +30,7 @@ import { cn, getErrorMessage } from "@/lib/utils";
 
 export default function MyIncidentDetailPage() {
   return (
-    <Suspense
-      fallback={
-        <div className="flex justify-center py-16">
-          <Spinner />
-        </div>
-      }
-    >
+    <Suspense fallback={<IncidentDetailSkeleton showComments={false} />}>
       <MyIncidentDetailContent />
     </Suspense>
   );
@@ -50,11 +45,7 @@ function MyIncidentDetailContent() {
   const [deleteOpen, setDeleteOpen] = useState(false);
 
   if (isPending) {
-    return (
-      <div className="flex justify-center py-16">
-        <Spinner />
-      </div>
-    );
+    return <IncidentDetailSkeleton showComments={false} />;
   }
 
   if (isError || !data?.data) {

@@ -5,19 +5,13 @@ import { useParams } from "next/navigation";
 import { Suspense } from "react";
 import StatusBadge from "@/components/dashboard/status-badge";
 import IncidentForm from "@/components/modules/incidents/incident-form";
+import { IncidentFormSkeleton } from "@/components/skeletons/incident-skeletons";
 import { buttonVariants } from "@/components/ui/button";
-import { Spinner } from "@/components/ui/spinner";
 import { useMyIncident } from "@/hooks";
 
 export default function EditIncidentPage() {
   return (
-    <Suspense
-      fallback={
-        <div className="flex justify-center py-16">
-          <Spinner />
-        </div>
-      }
-    >
+    <Suspense fallback={<IncidentFormSkeleton />}>
       <EditIncidentContent />
     </Suspense>
   );
@@ -29,11 +23,7 @@ function EditIncidentContent() {
   const { data, isPending, isError } = useMyIncident(incidentId);
 
   if (isPending) {
-    return (
-      <div className="flex justify-center py-16">
-        <Spinner />
-      </div>
-    );
+    return <IncidentFormSkeleton />;
   }
 
   if (isError || !data?.data) {

@@ -7,6 +7,7 @@ import { useParams } from "next/navigation";
 import { Suspense } from "react";
 import StatusBadge from "@/components/dashboard/status-badge";
 import IncidentComments from "@/components/modules/comments/incident-comments";
+import { IncidentDetailSkeleton } from "@/components/skeletons/incident-skeletons";
 import { buttonVariants } from "@/components/ui/button";
 import {
   Card,
@@ -15,19 +16,12 @@ import {
   CardHeader,
   CardTitle,
 } from "@/components/ui/card";
-import { Spinner } from "@/components/ui/spinner";
 import { usePublicIncident } from "@/hooks";
 import { formatDate, formatDateTime, humanize } from "@/lib/format";
 
 export default function IncidentDetailPage() {
   return (
-    <Suspense
-      fallback={
-        <div className="flex justify-center py-16">
-          <Spinner />
-        </div>
-      }
-    >
+    <Suspense fallback={<IncidentDetailSkeleton />}>
       <IncidentDetailContent />
     </Suspense>
   );
@@ -39,11 +33,7 @@ function IncidentDetailContent() {
   const { data, isPending, isError } = usePublicIncident(incidentId);
 
   if (isPending) {
-    return (
-      <div className="flex justify-center py-16">
-        <Spinner />
-      </div>
-    );
+    return <IncidentDetailSkeleton />;
   }
 
   if (isError || !data?.data) {

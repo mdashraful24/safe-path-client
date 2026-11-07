@@ -5,7 +5,6 @@ import { Eye, EyeOff } from "lucide-react";
 import Link from "next/link";
 import { useRouter } from "next/navigation";
 import { useState } from "react";
-import GoogleLoginComponent from "@/components/modules/google-login/GoogleLogin";
 import { Button } from "@/components/ui/button";
 import { Spinner } from "@/components/ui/spinner";
 import { toast } from "@/components/ui/toast";
@@ -67,8 +66,8 @@ export default function RegisterForm() {
   return (
     <div className="flex flex-col gap-7">
       {/* Heading */}
-      <div className="flex flex-col gap-1">
-        <h1 className="text-3xl font-bold tracking-tight text-slate-900">
+      <div className="flex flex-col gap-1 mt-5 lg:mt-0">
+        <h1 className="text-3xl font-bold tracking-tight text-slate-900 dark:text-white">
           Create an account
         </h1>
         <p className="text-md md:text-lg">
@@ -95,7 +94,7 @@ export default function RegisterForm() {
                 <div className="relative group">
                   <label
                     htmlFor={field.name}
-                    className="absolute left-4 top-2 text-sm font-medium text-slate-600 transition-all"
+                    className="absolute left-4 top-2 text-sm font-medium text-slate-600 dark:text-slate-400 transition-all"
                   >
                     Full name
                   </label>
@@ -109,7 +108,7 @@ export default function RegisterForm() {
                     onBlur={field.handleBlur}
                     autoComplete="off"
                     aria-invalid={isInvalid}
-                    className="w-full rounded-xl bg-slate-50 border-0 border-b-2 border-slate-200 focus:border-emerald-500 px-4 pt-7 pb-3 text-sm text-slate-900 placeholder-transparent focus:outline-none focus:bg-emerald-50/30 transition-all duration-200"
+                    className="w-full rounded-xl bg-slate-50 dark:bg-slate-900 border-0 border-b-2 border-slate-200 dark:border-slate-700 focus:border-emerald-500 px-4 pt-7 pb-3 text-sm text-slate-900 dark:text-white placeholder-transparent focus:outline-none focus:bg-emerald-50/30 dark:focus:bg-emerald-950/30 transition-all duration-200"
                   />
                 </div>
                 {isInvalid && field.state.meta.errors.length > 0 && (
@@ -136,7 +135,7 @@ export default function RegisterForm() {
                 <div className="relative group">
                   <label
                     htmlFor={field.name}
-                    className="absolute left-4 top-2 text-sm font-medium text-slate-600 transition-all"
+                    className="absolute left-4 top-2 text-sm font-medium text-slate-600 dark:text-slate-400 transition-all"
                   >
                     Email address
                   </label>
@@ -150,7 +149,7 @@ export default function RegisterForm() {
                     onBlur={field.handleBlur}
                     autoComplete="off"
                     aria-invalid={isInvalid}
-                    className="w-full rounded-xl bg-slate-50 border-0 border-b-2 border-slate-200 focus:border-emerald-500 px-4 pt-7 pb-3 text-sm text-slate-900 placeholder-transparent focus:outline-none focus:bg-emerald-50/30 transition-all duration-200"
+                    className="w-full rounded-xl bg-slate-50 dark:bg-slate-900 border-0 border-b-2 border-slate-200 dark:border-slate-700 focus:border-emerald-500 px-4 pt-7 pb-3 text-sm text-slate-900 dark:text-white placeholder-transparent focus:outline-none focus:bg-emerald-50/30 dark:focus:bg-emerald-950/30 transition-all duration-200"
                   />
                 </div>
                 {isInvalid && field.state.meta.errors.length > 0 && (
@@ -177,7 +176,7 @@ export default function RegisterForm() {
                 <div className="relative group">
                   <label
                     htmlFor={field.name}
-                    className="absolute left-4 top-2 text-sm font-medium text-slate-600 transition-all"
+                    className="absolute left-4 top-2 text-sm font-medium text-slate-600 dark:text-slate-400 transition-all"
                   >
                     Password
                   </label>
@@ -191,12 +190,12 @@ export default function RegisterForm() {
                     onBlur={field.handleBlur}
                     autoComplete="off"
                     aria-invalid={isInvalid}
-                    className="w-full rounded-xl bg-slate-50 border-0 border-b-2 border-slate-200 focus:border-emerald-500 px-4 pt-7 pb-3 pr-12 text-sm text-slate-900 placeholder-transparent focus:outline-none focus:bg-emerald-50/30 transition-all duration-200"
+                    className="w-full rounded-xl bg-slate-50 dark:bg-slate-900 border-0 border-b-2 border-slate-200 dark:border-slate-700 focus:border-emerald-500 px-4 pt-7 pb-3 pr-12 text-sm text-slate-900 dark:text-white placeholder-transparent focus:outline-none focus:bg-emerald-50/30 dark:focus:bg-emerald-950/30 transition-all duration-200"
                   />
                   <button
                     type="button"
                     onClick={() => setShowPassword((v) => !v)}
-                    className="absolute right-3 bottom-3 text-slate-600 hover:text-slate-600 transition-colors"
+                    className="absolute right-3 bottom-3 text-slate-600 hover:text-slate-900 dark:text-slate-400 dark:hover:text-slate-200 transition-colors"
                     tabIndex={-1}
                   >
                     {showPassword ? <EyeOff size={18} /> : <Eye size={18} />}
@@ -226,7 +225,7 @@ export default function RegisterForm() {
                 <div className="relative group">
                   <label
                     htmlFor={field.name}
-                    className="absolute left-4 top-2 text-sm font-medium text-slate-600 transition-all"
+                    className="absolute left-4 top-2 text-sm font-medium text-slate-600 dark:text-slate-400 transition-all"
                   >
                     Confirm password
                   </label>
@@ -240,12 +239,12 @@ export default function RegisterForm() {
                     onBlur={field.handleBlur}
                     autoComplete="off"
                     aria-invalid={isInvalid}
-                    className="w-full rounded-xl bg-slate-50 border-0 border-b-2 border-slate-200 focus:border-emerald-500 px-4 pt-7 pb-3 pr-12 text-sm text-slate-900 placeholder-transparent focus:outline-none focus:bg-emerald-50/30 transition-all duration-200"
+                    className="w-full rounded-xl bg-slate-50 dark:bg-slate-900 border-0 border-b-2 border-slate-200 dark:border-slate-700 focus:border-emerald-500 px-4 pt-7 pb-3 pr-12 text-sm text-slate-900 dark:text-white placeholder-transparent focus:outline-none focus:bg-emerald-50/30 dark:focus:bg-emerald-950/30 transition-all duration-200"
                   />
                   <button
                     type="button"
                     onClick={() => setShowConfirmPassword((v) => !v)}
-                    className="absolute right-3 bottom-3 text-slate-600 hover:text-slate-600 transition-colors"
+                    className="absolute right-3 bottom-3 text-slate-600 hover:text-slate-900 dark:text-slate-400 dark:hover:text-slate-200 transition-colors"
                     tabIndex={-1}
                   >
                     {showConfirmPassword ? (
@@ -298,11 +297,11 @@ export default function RegisterForm() {
       {/* <GoogleLoginComponent /> */}
 
       {/* Footer link */}
-      <p className="text-center text-md text-slate-600">
+      <p className="text-center text-md text-slate-600 dark:text-slate-400">
         Already have an account?{" "}
         <Link
           href="/login"
-          className="font-semibold text-emerald-600 hover:text-emerald-700 transition-colors"
+          className="font-semibold text-emerald-600 dark:text-emerald-400 hover:text-emerald-700 dark:hover:text-emerald-300 transition-colors"
         >
           Sign in
         </Link>

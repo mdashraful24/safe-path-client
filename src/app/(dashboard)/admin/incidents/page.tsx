@@ -3,10 +3,10 @@
 import Link from "next/link";
 import { useState } from "react";
 import StatusBadge from "@/components/dashboard/status-badge";
+import { TableSkeleton } from "@/components/skeletons/admin-skeletons";
 import { buttonVariants } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import NativeSelect from "@/components/ui/native-select";
-import { Spinner } from "@/components/ui/spinner";
 import {
   Table,
   TableBody,
@@ -108,9 +108,7 @@ export default function AdminIncidentsPage() {
       </div>
 
       {isPending ? (
-        <div className="flex justify-center py-16">
-          <Spinner />
-        </div>
+        <TableSkeleton columns={7} rows={PAGE_SIZE} label="Loading incidents" />
       ) : (
         <>
           <div className="rounded-xl border">

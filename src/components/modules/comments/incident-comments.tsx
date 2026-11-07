@@ -2,6 +2,7 @@
 
 import Link from "next/link";
 import { useState } from "react";
+import { CommentsSkeleton } from "@/components/skeletons/incident-skeletons";
 import { Button } from "@/components/ui/button";
 import {
   Card,
@@ -209,9 +210,7 @@ export default function IncidentComments({
         )}
 
         {isPending ? (
-          <div className="flex justify-center py-6">
-            <Spinner />
-          </div>
+          <CommentsSkeleton />
         ) : comments.length === 0 ? (
           <p className="text-sm text-muted-foreground">
             No comments yet. Start the conversation.

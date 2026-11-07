@@ -2,6 +2,7 @@
 
 import { useState } from "react";
 import StatusBadge from "@/components/dashboard/status-badge";
+import { TableSkeleton } from "@/components/skeletons/admin-skeletons";
 import { Button } from "@/components/ui/button";
 import {
   Dialog,
@@ -192,9 +193,11 @@ export default function AdminContactsPage() {
       </div>
 
       {isPending ? (
-        <div className="flex justify-center py-16">
-          <Spinner />
-        </div>
+        <TableSkeleton
+          columns={8}
+          rows={PAGE_SIZE}
+          label="Loading contact messages"
+        />
       ) : (
         <>
           <div className="rounded-xl border">

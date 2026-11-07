@@ -1,18 +1,11 @@
 "use client";
 
-import {
-  Compass,
-  Filter,
-  MapPin,
-  PlusCircle,
-  Search,
-  ShieldAlert,
-} from "lucide-react";
+import { Compass, MapPin, PlusCircle, Search, ShieldAlert } from "lucide-react";
 import Link from "next/link";
 import { useState } from "react";
 import IncidentCard from "@/components/modules/incidents/incident-card";
+import { IncidentGridSkeleton } from "@/components/skeletons/incident-skeletons";
 import NativeSelect from "@/components/ui/native-select";
-import { Spinner } from "@/components/ui/spinner";
 import TablePagination from "@/components/ui/table-pagination";
 import { usePublicIncidents } from "@/hooks";
 import type { IncidentCategory } from "@/types";
@@ -133,9 +126,7 @@ export default function IncidentsPage() {
 
       {/* Incidents Grid */}
       {isPending ? (
-        <div className="flex h-72 items-center justify-center">
-          <Spinner />
-        </div>
+        <IncidentGridSkeleton count={PAGE_SIZE} />
       ) : incidents.length === 0 ? (
         <div className="flex flex-col items-center justify-center rounded-3xl border border-dashed border-slate-300 dark:border-slate-800 p-16 text-center bg-slate-50/50 dark:bg-slate-900/20">
           <div className="flex size-14 items-center justify-center rounded-2xl bg-slate-100 dark:bg-slate-800 text-slate-400 mb-4">

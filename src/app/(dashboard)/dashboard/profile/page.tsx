@@ -17,6 +17,7 @@ import Link from "next/link";
 import { useRouter } from "next/navigation";
 import { useState } from "react";
 import type { UpdateProfilePayload } from "@/api";
+import { ProfileSkeleton } from "@/components/skeletons/dashboard-skeletons";
 import { Button } from "@/components/ui/button";
 import {
   Dialog,
@@ -82,7 +83,7 @@ export default function ProfilePage() {
   const verifyEmail = useVerifyEmailChange();
   const requestDeletion = useRequestAccountDeletion();
 
-  if (!user) return null;
+  if (!user) return <ProfileSkeleton />;
 
   const isGoogleAccount = user.authProvider === "GOOGLE";
   const isAdmin = user.role === "ADMIN";

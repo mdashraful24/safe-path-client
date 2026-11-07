@@ -117,7 +117,7 @@ export default function GoogleLoginComponent({
 
       {/* Custom loading overlay shown while pending */}
       {isPending && (
-        <div className="absolute inset-0 flex items-center justify-center gap-3 rounded-full border border-slate-200 bg-white px-4 h-11 text-sm font-medium text-slate-700 shadow-sm">
+        <div className="absolute inset-0 flex items-center justify-center gap-3 rounded-full border border-slate-200 bg-white px-4 h-11 text-sm font-medium text-slate-700 shadow-sm dark:border-slate-700 dark:bg-slate-900 dark:text-slate-200">
           <Spinner />
           <span>Connecting...</span>
         </div>

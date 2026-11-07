@@ -62,8 +62,7 @@ export default function Header() {
         <Logo />
 
         {/* Right actions */}
-        <div className="flex items-center gap-2">
-          <ThemeToggle />
+        <div className="flex items-center gap-3">
           {/* Navigation Links */}
           <nav className="hidden md:flex items-center gap-1">
             {navLinks.map((link) => {
@@ -149,6 +148,7 @@ export default function Header() {
               </Link>
             </div>
           )}
+          <ThemeToggle />
         </div>
       </div>
     </header>

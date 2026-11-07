@@ -4,6 +4,10 @@ import Image from "next/image";
 import Link from "next/link";
 import { useState } from "react";
 import StatusBadge from "@/components/dashboard/status-badge";
+import {
+  TableSkeleton,
+  UserDetailsSkeleton,
+} from "@/components/skeletons/admin-skeletons";
 import { Button, buttonVariants } from "@/components/ui/button";
 import {
   Dialog,
@@ -218,9 +222,7 @@ export default function AdminUsersPage() {
       </div>
 
       {isPending ? (
-        <div className="flex justify-center py-16">
-          <Spinner />
-        </div>
+        <TableSkeleton columns={6} rows={PAGE_SIZE} label="Loading users" />
       ) : (
         <>
           <div className="rounded-xl border">
@@ -371,9 +373,7 @@ export default function AdminUsersPage() {
           </div>
 
           {userDetails.isPending ? (
-            <div className="flex justify-center py-12">
-              <Spinner />
-            </div>
+            <UserDetailsSkeleton />
           ) : detailUser ? (
             <div className="max-h-[55vh] overflow-y-auto px-6 py-6">
               <section className="flex flex-col gap-3">

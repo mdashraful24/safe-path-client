@@ -63,8 +63,8 @@ export default function LoginForm({
   return (
     <div className="flex flex-col gap-7">
       {/* Heading */}
-      <div className="flex flex-col gap-1">
-        <h1 className="text-3xl font-bold tracking-tight text-slate-900">
+      <div className="flex flex-col gap-1 mt-5 lg:mt-0">
+        <h1 className="text-3xl font-bold tracking-tight text-slate-900 dark:text-white">
           Welcome back
         </h1>
         <p className="text-md md:text-lg">
@@ -91,7 +91,7 @@ export default function LoginForm({
                 <div className="relative group">
                   <label
                     htmlFor={field.name}
-                    className="absolute left-4 top-2 text-sm font-medium text-slate-600 transition-all"
+                    className="absolute left-4 top-2 text-sm font-medium text-slate-600 dark:text-slate-400 transition-all"
                   >
                     Email address
                   </label>
@@ -105,7 +105,7 @@ export default function LoginForm({
                     onBlur={field.handleBlur}
                     autoComplete="off"
                     aria-invalid={isInvalid}
-                    className="w-full rounded-xl bg-slate-50 border-0 border-b-2 border-slate-200 focus:border-emerald-500 px-4 pt-7 pb-3 text-sm text-slate-900 placeholder-transparent focus:outline-none focus:bg-emerald-50/30 transition-all duration-200"
+                    className="w-full rounded-xl bg-slate-50 dark:bg-slate-900 border-0 border-b-2 border-slate-200 dark:border-slate-700 focus:border-emerald-500 px-4 pt-7 pb-3 text-sm text-slate-900 dark:text-white placeholder-transparent focus:outline-none focus:bg-emerald-50/30 dark:focus:bg-emerald-950/30 transition-all duration-200"
                   />
                 </div>
                 {isInvalid && field.state.meta.errors.length > 0 && (
@@ -133,7 +133,7 @@ export default function LoginForm({
                   <div className="flex items-center justify-between absolute left-4 right-4 top-2">
                     <label
                       htmlFor={field.name}
-                      className="text-sm font-medium text-slate-600"
+                      className="text-sm font-medium text-slate-600 dark:text-slate-400"
                     >
                       Password
                     </label>
@@ -148,13 +148,13 @@ export default function LoginForm({
                     onBlur={field.handleBlur}
                     autoComplete="off"
                     aria-invalid={isInvalid}
-                    className="w-full rounded-xl bg-slate-50 border-0 border-b-2 border-slate-200 focus:border-emerald-500 px-4 pt-7 pb-3 pr-12 text-sm text-slate-900 placeholder-transparent focus:outline-none focus:bg-emerald-50/30 transition-all duration-200"
+                    className="w-full rounded-xl bg-slate-50 dark:bg-slate-900 border-0 border-b-2 border-slate-200 dark:border-slate-700 focus:border-emerald-500 px-4 pt-7 pb-3 pr-12 text-sm text-slate-900 dark:text-white placeholder-transparent focus:outline-none focus:bg-emerald-50/30 dark:focus:bg-emerald-950/30 transition-all duration-200"
                   />
                   <button
                     type="button"
                     onClick={() => setShowPassword((v) => !v)}
                     disabled={isLoginProcessing}
-                    className="absolute right-3 bottom-3 text-slate-600 hover:text-slate-600 transition-colors"
+                    className="absolute right-3 bottom-3 text-slate-600 hover:text-slate-900 dark:text-slate-400 dark:hover:text-slate-200 transition-colors"
                     tabIndex={-1}
                   >
                     {showPassword ? <EyeOff size={18} /> : <Eye size={18} />}
@@ -171,7 +171,7 @@ export default function LoginForm({
 
                 <Link
                   href="/forgot-password"
-                  className="text-sm text-end font-medium text-emerald-600 hover:text-emerald-700 transition-colors"
+                  className="text-sm text-end font-medium text-emerald-600 dark:text-emerald-400 hover:text-emerald-700 dark:hover:text-emerald-300 transition-colors"
                   tabIndex={-1}
                 >
                   Forgot password?
@@ -200,11 +200,11 @@ export default function LoginForm({
 
       {/* Divider */}
       <div className="flex items-center gap-3">
-        <div className="h-px flex-1 bg-slate-300" />
-        <span className="text-xs font-medium text-slate-500 uppercase tracking-widest">
+        <div className="h-px flex-1 bg-slate-300 dark:bg-slate-700" />
+        <span className="text-xs font-medium text-slate-500 dark:text-slate-400 uppercase tracking-widest">
           or continue with
         </span>
-        <div className="h-px flex-1 bg-slate-300" />
+        <div className="h-px flex-1 bg-slate-300 dark:bg-slate-700" />
       </div>
 
       {/* Google login */}
@@ -221,11 +221,11 @@ export default function LoginForm({
       />
 
       {/* Footer link */}
-      <p className="text-center text-md text-slate-600">
+      <p className="text-center text-md text-slate-600 dark:text-slate-400">
         Don&apos;t have an account?{" "}
         <Link
           href="/register"
-          className="font-semibold text-emerald-600 hover:text-emerald-700 transition-colors"
+          className="font-semibold text-emerald-600 dark:text-emerald-400 hover:text-emerald-700 dark:hover:text-emerald-300 transition-colors"
         >
           Create one
         </Link>

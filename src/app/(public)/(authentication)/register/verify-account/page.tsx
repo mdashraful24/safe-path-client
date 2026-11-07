@@ -1,7 +1,7 @@
 import type { Metadata } from "next";
 import { Suspense } from "react";
 import VerifyAccountForm from "@/components/form/verify-account-form";
-import { Spinner } from "@/components/ui/spinner";
+import { AuthFormSkeleton } from "@/components/skeletons/auth-skeletons";
 
 export const metadata: Metadata = {
   title: "Verify email",
@@ -9,13 +9,7 @@ export const metadata: Metadata = {
 
 export default function VerifyAccountPage() {
   return (
-    <Suspense
-      fallback={
-        <div className="flex justify-center py-10">
-          <Spinner />
-        </div>
-      }
-    >
+    <Suspense fallback={<AuthFormSkeleton showOtp />}>
       <VerifyAccountForm />
     </Suspense>
   );

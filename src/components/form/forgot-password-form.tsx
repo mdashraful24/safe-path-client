@@ -166,11 +166,11 @@ export default function ForgotPasswordForm() {
         {/* Step dots */}
         <div className="flex items-center gap-2">
           <span className="h-2 w-6 rounded-full bg-emerald-500" />
-          <span className="h-2 w-2 rounded-full bg-slate-200" />
+          <span className="h-2 w-2 rounded-full bg-slate-200 dark:bg-slate-700" />
         </div>
 
         <div className="flex flex-col gap-1.5">
-          <h1 className="text-3xl font-bold tracking-tight text-slate-900">
+          <h1 className="text-3xl font-bold tracking-tight text-slate-900 dark:text-white">
             Forgot password?
           </h1>
           <p className="text-md md:text-lg">
@@ -190,7 +190,7 @@ export default function ForgotPasswordForm() {
             <div className="relative group">
               <label
                 htmlFor="email"
-                className="absolute left-4 top-2 text-sm font-medium text-slate-600"
+                className="absolute left-4 top-2 text-sm font-medium text-slate-600 dark:text-slate-400"
               >
                 Email address
               </label>
@@ -206,7 +206,7 @@ export default function ForgotPasswordForm() {
                 }}
                 autoComplete="off"
                 aria-invalid={Boolean(error)}
-                className="w-full rounded-xl bg-slate-50 border-0 border-b-2 border-slate-200 focus:border-emerald-500 px-4 pt-7 pb-3 text-sm text-slate-900 placeholder-transparent focus:outline-none focus:bg-emerald-50/30 transition-all duration-200"
+                className="w-full rounded-xl bg-slate-50 dark:bg-slate-900 border-0 border-b-2 border-slate-200 dark:border-slate-700 focus:border-emerald-500 px-4 pt-7 pb-3 text-sm text-slate-900 dark:text-white placeholder-transparent focus:outline-none focus:bg-emerald-50/30 dark:focus:bg-emerald-950/30 transition-all duration-200"
               />
             </div>
             {error && (
@@ -231,10 +231,10 @@ export default function ForgotPasswordForm() {
           </Button>
         </form>
 
-        <p className="text-center text-md text-slate-500">
+        <p className="text-center text-md text-slate-500 dark:text-slate-400">
           <Link
             href="/login"
-            className="font-semibold text-emerald-600 hover:text-emerald-700 transition-colors"
+            className="font-semibold text-emerald-600 dark:text-emerald-400 hover:text-emerald-700 dark:hover:text-emerald-300 transition-colors"
           >
             ← Back to sign in
           </Link>
@@ -255,13 +255,15 @@ export default function ForgotPasswordForm() {
       </div>
 
       <div className="flex flex-col gap-1">
-        <h1 className="text-3xl font-bold tracking-tight text-slate-900">
+        <h1 className="text-3xl font-bold tracking-tight text-slate-900 dark:text-white">
           Reset password
         </h1>
-        <p className="text-sm text-slate-500">
+        <p className="text-sm text-slate-500 dark:text-slate-400">
           Enter the code sent to{" "}
-          <span className="font-medium text-slate-700">{email}</span> and choose
-          a new password.
+          <span className="font-medium text-slate-700 dark:text-slate-300">
+            {email}
+          </span>{" "}
+          and choose a new password.
         </p>
       </div>
 
@@ -275,7 +277,10 @@ export default function ForgotPasswordForm() {
       >
         {/* OTP slots */}
         <div className="flex flex-col gap-2">
-          <label className="text-xs font-medium text-slate-500 ml-1">
+          <label
+            htmlFor="otp"
+            className="text-xs font-medium text-slate-500 dark:text-slate-400 ml-1"
+          >
             Verification code
           </label>
           <InputOTP
@@ -293,41 +298,41 @@ export default function ForgotPasswordForm() {
             <InputOTPGroup className="gap-2">
               <InputOTPSlot
                 index={0}
-                className="size-11 rounded-xl border-slate-200 bg-slate-50 text-base font-semibold focus:border-emerald-500"
+                className="size-11 rounded-xl border-slate-200 dark:border-slate-700 bg-slate-50 dark:bg-slate-900 text-base font-semibold focus:border-emerald-500"
               />
               <InputOTPSlot
                 index={1}
-                className="size-11 rounded-xl border-slate-200 bg-slate-50 text-base font-semibold focus:border-emerald-500"
+                className="size-11 rounded-xl border-slate-200 dark:border-slate-700 bg-slate-50 dark:bg-slate-900 text-base font-semibold focus:border-emerald-500"
               />
               <InputOTPSlot
                 index={2}
-                className="size-11 rounded-xl border-slate-200 bg-slate-50 text-base font-semibold focus:border-emerald-500"
+                className="size-11 rounded-xl border-slate-200 dark:border-slate-700 bg-slate-50 dark:bg-slate-900 text-base font-semibold focus:border-emerald-500"
               />
               <InputOTPSlot
                 index={3}
-                className="size-11 rounded-xl border-slate-200 bg-slate-50 text-base font-semibold focus:border-emerald-500"
+                className="size-11 rounded-xl border-slate-200 dark:border-slate-700 bg-slate-50 dark:bg-slate-900 text-base font-semibold focus:border-emerald-500"
               />
               <InputOTPSlot
                 index={4}
-                className="size-11 rounded-xl border-slate-200 bg-slate-50 text-base font-semibold focus:border-emerald-500"
+                className="size-11 rounded-xl border-slate-200 dark:border-slate-700 bg-slate-50 dark:bg-slate-900 text-base font-semibold focus:border-emerald-500"
               />
               <InputOTPSlot
                 index={5}
-                className="size-11 rounded-xl border-slate-200 bg-slate-50 text-base font-semibold focus:border-emerald-500"
+                className="size-11 rounded-xl border-slate-200 dark:border-slate-700 bg-slate-50 dark:bg-slate-900 text-base font-semibold focus:border-emerald-500"
               />
             </InputOTPGroup>
           </InputOTP>
 
           {expiresAt && !isOtpExpired && (
-            <p className="text-xs text-slate-500 ml-1">
+            <p className="text-xs text-slate-500 dark:text-slate-400 ml-1">
               Code expires in{" "}
-              <span className="font-semibold text-emerald-600">
+              <span className="font-semibold text-emerald-600 dark:text-emerald-400">
                 {formatRemainingTime()}
               </span>
             </p>
           )}
           {isOtpExpired && (
-            <p className="text-xs text-amber-600 ml-1">
+            <p className="text-xs text-amber-600 dark:text-amber-400 ml-1">
               This code has expired. Please resend a new one.
             </p>
           )}
@@ -337,7 +342,7 @@ export default function ForgotPasswordForm() {
         <div className="relative group">
           <label
             htmlFor="newPassword"
-            className="absolute left-4 top-2 text-xs font-medium text-slate-500"
+            className="absolute left-4 top-2 text-xs font-medium text-slate-500 dark:text-slate-400"
           >
             New password
           </label>
@@ -352,7 +357,7 @@ export default function ForgotPasswordForm() {
               setError("");
             }}
             autoComplete="off"
-            className="w-full rounded-xl bg-slate-50 border-0 border-b-2 border-slate-200 focus:border-emerald-500 px-4 pt-7 pb-3 text-sm text-slate-900 placeholder-transparent focus:outline-none focus:bg-emerald-50/30 transition-all duration-200"
+            className="w-full rounded-xl bg-slate-50 dark:bg-slate-900 border-0 border-b-2 border-slate-200 dark:border-slate-700 focus:border-emerald-500 px-4 pt-7 pb-3 text-sm text-slate-900 dark:text-white placeholder-transparent focus:outline-none focus:bg-emerald-50/30 dark:focus:bg-emerald-950/30 transition-all duration-200"
           />
         </div>
 
@@ -360,7 +365,7 @@ export default function ForgotPasswordForm() {
         <div className="relative group">
           <label
             htmlFor="confirmPassword"
-            className="absolute left-4 top-2 text-xs font-medium text-slate-500"
+            className="absolute left-4 top-2 text-xs font-medium text-slate-500 dark:text-slate-400"
           >
             Confirm new password
           </label>
@@ -375,7 +380,7 @@ export default function ForgotPasswordForm() {
               setError("");
             }}
             autoComplete="off"
-            className="w-full rounded-xl bg-slate-50 border-0 border-b-2 border-slate-200 focus:border-emerald-500 px-4 pt-7 pb-3 text-sm text-slate-900 placeholder-transparent focus:outline-none focus:bg-emerald-50/30 transition-all duration-200"
+            className="w-full rounded-xl bg-slate-50 dark:bg-slate-900 border-0 border-b-2 border-slate-200 dark:border-slate-700 focus:border-emerald-500 px-4 pt-7 pb-3 text-sm text-slate-900 dark:text-white placeholder-transparent focus:outline-none focus:bg-emerald-50/30 dark:focus:bg-emerald-950/30 transition-all duration-200"
           />
         </div>
 
@@ -387,7 +392,7 @@ export default function ForgotPasswordForm() {
             type="button"
             onClick={handleResend}
             disabled={resendPending}
-            className="flex-1 h-12 rounded-full border-2 border-slate-200 text-sm font-semibold text-slate-600 hover:border-emerald-300 hover:text-emerald-700 transition-all duration-200 disabled:opacity-50"
+            className="flex-1 h-12 rounded-full border-2 border-slate-200 dark:border-slate-700 text-sm font-semibold text-slate-600 dark:text-slate-400 hover:border-emerald-300 dark:hover:border-emerald-600 hover:text-emerald-700 dark:hover:text-emerald-300 transition-all duration-200 disabled:opacity-50"
           >
             {resendPending ? (
               <span className="flex items-center justify-center gap-2">

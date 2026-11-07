@@ -5,6 +5,8 @@ import Link from "next/link";
 import { useParams, useRouter } from "next/navigation";
 import { Suspense, useState } from "react";
 import StatusBadge from "@/components/dashboard/status-badge";
+import { AdminIncidentDetailSkeleton } from "@/components/skeletons/admin-skeletons";
+import { CommentsSkeleton } from "@/components/skeletons/incident-skeletons";
 import { Button, buttonVariants } from "@/components/ui/button";
 import {
   Card,
@@ -57,13 +59,7 @@ const categories: IncidentCategory[] = [
 
 export default function AdminIncidentDetailPage() {
   return (
-    <Suspense
-      fallback={
-        <div className="flex justify-center py-16">
-          <Spinner />
-        </div>
-      }
-    >
+    <Suspense fallback={<AdminIncidentDetailSkeleton />}>
       <AdminIncidentDetailContent />
     </Suspense>
   );
@@ -76,11 +72,7 @@ function AdminIncidentDetailContent() {
   const incident = data?.data;
 
   if (isPending) {
-    return (
-      <div className="flex justify-center py-16">
-        <Spinner />
-      </div>
-    );
+    return <AdminIncidentDetailSkeleton />;
   }
 
   if (isError || !incident) {
@@ -490,9 +482,7 @@ function CommentsCard({ incident }: { incident: AdminIncidentDetail }) {
       </CardHeader>
       <CardContent className="flex flex-col gap-3">
         {isPending ? (
-          <div className="flex justify-center py-6">
-            <Spinner />
-          </div>
+          <CommentsSkeleton rows={4} />
         ) : comments.length === 0 ? (
           <p className="text-sm text-muted-foreground">No comments yet.</p>
         ) : (

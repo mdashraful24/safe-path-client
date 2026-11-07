@@ -1,4 +1,5 @@
 import Logo from "@/components/brand/logo";
+import ThemeToggle from "@/components/theme-toggle";
 
 export default function AuthenticationLayout({
   children,
@@ -151,7 +152,9 @@ export default function AuthenticationLayout({
       </aside>
 
       {/* ── Right panel ── */}
-      <main className="flex flex-1 items-center justify-center bg-white p-6 py-12">
+      <main className="relative flex flex-1 items-center justify-center bg-white p-6 py-12 dark:bg-slate-950">
+        <Logo className="absolute left-4 top-4 sm:left-6 sm:top-6 lg:hidden" />
+        <ThemeToggle className="absolute right-4 top-4 sm:right-6 sm:top-6" />
         <div className="w-full max-w-100 px-2">{children}</div>
       </main>
     </div>

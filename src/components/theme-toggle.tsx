@@ -37,9 +37,8 @@ export default function ThemeToggle({ className }: { className?: string }) {
 
     const activeIndex = options.findIndex((option) => option.value === theme);
     const frame = requestAnimationFrame(() => {
-      const items = menuRef.current?.querySelectorAll<HTMLButtonElement>(
-        menuItemSelector,
-      );
+      const items =
+        menuRef.current?.querySelectorAll<HTMLButtonElement>(menuItemSelector);
       items?.[activeIndex >= 0 ? activeIndex : 0]?.focus();
     });
 

@@ -19,7 +19,7 @@ import {
 import Link from "next/link";
 import type { ReactNode } from "react";
 import StatusBadge from "@/components/dashboard/status-badge";
-import { Spinner } from "@/components/ui/spinner";
+import { DashboardOverviewSkeleton } from "@/components/skeletons/dashboard-skeletons";
 import { useDashboardOverview, useGetMe } from "@/hooks";
 import { formatDate, formatDateTime } from "@/lib/format";
 import { cn } from "@/lib/utils";
@@ -261,11 +261,7 @@ export default function DashboardPage() {
   const overview = data?.data;
 
   if (isPending) {
-    return (
-      <div className="flex h-96 items-center justify-center">
-        <Spinner />
-      </div>
-    );
+    return <DashboardOverviewSkeleton />;
   }
 
   if (isError || !overview) {
